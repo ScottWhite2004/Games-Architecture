@@ -7,6 +7,15 @@ namespace OpenGL_Game.Scenes
     {
         protected SceneManager sceneManager;
 
+        public enum SceneTypes
+        { 
+            SCENE_NON,
+            SCENE_MAIN_MENU,
+            SCENE_GAME,
+            SCENE_GAME_OVER
+        }
+
+
         public Scene(SceneManager sceneManager)
         {
             this.sceneManager = sceneManager;

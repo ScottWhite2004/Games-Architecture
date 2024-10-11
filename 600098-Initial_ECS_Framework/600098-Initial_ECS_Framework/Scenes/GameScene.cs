@@ -57,7 +57,6 @@ namespace OpenGL_Game.Scenes
         {
             Entity newEntity;
             Entity newEntity2;
-            Entity newEntity3;
 
             newEntity = new Entity("Moon");
             newEntity.AddComponent(new ComponentPosition(-2.0f, 0.0f, 0.0f));
@@ -66,13 +65,10 @@ namespace OpenGL_Game.Scenes
 
             newEntity2 = new Entity("Wraith_Raider_Starship");
             newEntity2.AddComponent(new ComponentPosition(2.0f, 0.0f, 0.0f));
-            newEntity2.AddComponent(new ComponentGeometry("Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj"));
+            newEntity2.AddComponent(new ComponentGeometry("Geometry/Intergalactic_Spaceship/Intergalactic_Spaceship.obj"));
+            newEntity2.AddComponent(new ComponentVelocity(0.0f, 0.0f, 0.2f));
             entityManager.AddEntity(newEntity2);
 
-            newEntity3 = new Entity("Intergalactic_Spaceship");
-            newEntity3.AddComponent(new ComponentPosition(0.0f, 0.0f, 0.0f));
-            newEntity3.AddComponent(new ComponentGeometry("Geometry/Intergalactic_Spaceship/Intergalactic_Spaceship.obj"));
-            entityManager.AddEntity(newEntity3);
         }
 
         private void CreateSystems()
@@ -80,6 +76,8 @@ namespace OpenGL_Game.Scenes
             ISystem newSystem;
 
             newSystem = new SystemRender();
+            systemManager.AddSystem(newSystem);
+            newSystem = new SystemPhysics();
             systemManager.AddSystem(newSystem);
         }
 
@@ -119,7 +117,7 @@ namespace OpenGL_Game.Scenes
         public override void Close()
         {
             sceneManager.keyboardDownDelegate -= Keyboard_KeyDown;
-
+            //ResourceManager.RemoveAllAssets();
             // Need to remove assets (except Text) from Resource Manager
         }
 
@@ -140,7 +138,7 @@ namespace OpenGL_Game.Scenes
                     camera.RotateY(0.01f);
                     break;
                 case Keys.M:
-                    sceneManager.StartMenu();
+                    sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
                     break;
             }
         }

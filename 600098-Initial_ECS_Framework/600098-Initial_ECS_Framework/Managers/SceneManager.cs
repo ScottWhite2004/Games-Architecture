@@ -109,6 +109,13 @@ namespace OpenGL_Game.Managers
             scene = new MainMenuScene(this);
         }
 
+        public void EndGameMenu()
+        {
+            if (scene != null) scene.Close();
+            scene = new GameOverScene(this);
+
+        }
+
         public static int WindowWidth
         {
             get { return width; }
@@ -129,6 +136,33 @@ namespace OpenGL_Game.Managers
 
             //Load the GUI
             GUI.SetUpGUI(e.Width, e.Height);
+        }
+
+        public void ChangeScene(Scene.SceneTypes pSceneTypes)
+        {
+            if(scene != null)
+            {
+                scene.Close();
+            }
+          
+            switch (pSceneTypes)
+            {
+                case Scene.SceneTypes.SCENE_NON:
+                    scene = null;
+                    break;
+                case Scene.SceneTypes.SCENE_MAIN_MENU:
+                    StartMenu();
+                    break;
+                case Scene.SceneTypes.SCENE_GAME:
+                    StartNewGame();
+                    break;
+                case Scene.SceneTypes.SCENE_GAME_OVER:
+                    EndGameMenu();
+                    break;
+
+            }
+
+
         }
     }
 
