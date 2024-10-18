@@ -43,7 +43,7 @@ namespace OpenGL_Game.Systems
             }
         }
 
-        public void Motion(ComponentPosition position, ComponentVelocity velocity)
+        public void Motion(ComponentPosition position,ComponentVelocity velocity)
         {
             position.Position += velocity.Velocity * GameScene.dt;
         }

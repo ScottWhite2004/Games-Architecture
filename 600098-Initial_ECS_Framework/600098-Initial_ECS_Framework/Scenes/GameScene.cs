@@ -21,12 +21,16 @@ namespace OpenGL_Game.Scenes
         SystemManager systemManager;
         public Camera camera;
         public static GameScene gameInstance;
+        bool[] keysPressed;
 
         public GameScene(SceneManager sceneManager) : base(sceneManager)
         {
+            // Set Camera
+            camera = new Camera(new Vector3(0, 4, 7), new Vector3(0, 0, 0), (float)(sceneManager.Size.X) / (float)(sceneManager.Size.Y), 0.1f, 100f);
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
+            keysPressed = new bool[511];
 
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -35,6 +39,7 @@ namespace OpenGL_Game.Scenes
             sceneManager.updater = Update;
             // Set Keyboard events to go to a method in this class
             sceneManager.keyboardDownDelegate += Keyboard_KeyDown;
+            sceneManager.keyboardUpDelegate += Keyboard_KeyUp;
 
             // Enable Depth Testing
             GL.Enable(EnableCap.DepthTest);
@@ -44,8 +49,7 @@ namespace OpenGL_Game.Scenes
 
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-            // Set Camera
-            camera = new Camera(new Vector3(0, 4, 7), new Vector3(0, 0, 0), (float)(sceneManager.Size.X) / (float)(sceneManager.Size.Y), 0.1f, 100f);
+
 
             CreateEntities();
             CreateSystems();
@@ -61,6 +65,7 @@ namespace OpenGL_Game.Scenes
             newEntity = new Entity("Moon");
             newEntity.AddComponent(new ComponentPosition(-2.0f, 0.0f, 0.0f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
+            newEntity.AddComponent(new ComponentShaderDefault());
             entityManager.AddEntity(newEntity);
 
             newEntity2 = new Entity("Wraith_Raider_Starship");
@@ -75,7 +80,7 @@ namespace OpenGL_Game.Scenes
         {
             ISystem newSystem;
 
-            newSystem = new SystemRender();
+            newSystem = new SystemRender(gameInstance);
             systemManager.AddSystem(newSystem);
             newSystem = new SystemPhysics();
             systemManager.AddSystem(newSystem);
@@ -89,6 +94,48 @@ namespace OpenGL_Game.Scenes
         public override void Update(FrameEventArgs e)
         {
             dt = (float)e.Time;
+
+            //switch (e.Key)
+            //{
+            //    case Keys.Up:
+            //        camera.MoveForward(0.1f);
+            //        break;
+            //    case Keys.Down:
+            //        camera.MoveForward(-0.1f);
+            //        break;
+            //    case Keys.Left:
+            //        camera.RotateY(-0.01f);
+            //        break;
+            //    case Keys.Right:
+            //        camera.RotateY(0.01f);
+            //        break;
+            //    case Keys.M:
+            //        sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
+            //        break;
+            //}
+
+            if (keysPressed[(char)Keys.Up])
+            {
+                camera.MoveForward(1.0f * dt);
+            }
+            if (keysPressed[(char)Keys.Down])
+            {
+                camera.MoveForward(-1.0f * dt);
+            }
+            if (keysPressed[(char)Keys.Right])
+            {
+                camera.RotateY(0.1f * dt);
+            }
+            if (keysPressed[(char)Keys.Left])
+            {
+                camera.RotateY(-0.1f * dt);
+            }
+            if (keysPressed[(char)Keys.M])
+            {
+                sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
+            }
+
+
             //System.Console.WriteLine("fps=" + (int)(1.0/dt));
 
             // TODO: Add your update logic here
@@ -116,31 +163,21 @@ namespace OpenGL_Game.Scenes
         /// </summary>
         public override void Close()
         {
+            
             sceneManager.keyboardDownDelegate -= Keyboard_KeyDown;
+            sceneManager.keyboardUpDelegate -= Keyboard_KeyUp;
             //ResourceManager.RemoveAllAssets();
             // Need to remove assets (except Text) from Resource Manager
         }
 
         public void Keyboard_KeyDown(KeyboardKeyEventArgs e)
         {
-            switch (e.Key)
-            {
-                case Keys.Up:
-                    camera.MoveForward(0.1f);
-                    break;
-                case Keys.Down:
-                    camera.MoveForward(-0.1f);
-                    break;
-                case Keys.Left:
-                    camera.RotateY(-0.01f);
-                    break;
-                case Keys.Right:
-                    camera.RotateY(0.01f);
-                    break;
-                case Keys.M:
-                    sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
-                    break;
-            }
+            keysPressed[(Char)e.Key] = true;
+        }
+
+        public void Keyboard_KeyUp(KeyboardKeyEventArgs e)
+        {
+            keysPressed[((Char)e.Key)] = false;
         }
     }
 }
