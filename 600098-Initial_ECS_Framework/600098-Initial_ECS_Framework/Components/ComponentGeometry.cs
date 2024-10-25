@@ -17,6 +17,11 @@ namespace OpenGL_Game.Components
             get { return ComponentTypes.COMPONENT_GEOMETRY; }
         }
 
+        public void Close()
+        {
+
+        }
+
         public Geometry Geometry()
         {
             return geometry;

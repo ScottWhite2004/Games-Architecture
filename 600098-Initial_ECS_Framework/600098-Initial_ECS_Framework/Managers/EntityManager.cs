@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using OpenGL_Game.Components;
 using OpenGL_Game.Objects;
 //using System.Diagnostics;
 
@@ -32,6 +33,17 @@ namespace OpenGL_Game.Managers
         public List<Entity> Entities()
         {
             return entityList;
+        }
+
+        public void Clear()
+        {
+            foreach (Entity entity in entityList)
+            {
+                foreach(IComponent component in entity.Components)
+                {
+                    component.Close();
+                }
+            }
         }
     }
 }

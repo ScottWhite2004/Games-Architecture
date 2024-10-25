@@ -9,6 +9,7 @@ namespace OpenGL_Game.Components
         COMPONENT_GEOMETRY = 1 << 1,
         COMPONENT_VELOCITY = 1 << 2,
         COMPONENT_SHADER = 1 << 3,
+        COMPONENT_AUDIO = 1 << 4,
     }
 
     interface IComponent
@@ -17,5 +18,7 @@ namespace OpenGL_Game.Components
         {
             get;
         }
+
+        public void Close();
     }
 }

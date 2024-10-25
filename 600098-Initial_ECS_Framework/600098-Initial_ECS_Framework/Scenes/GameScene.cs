@@ -8,6 +8,7 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Mathematics;
 using SkiaSharp;
+using OpenTK.Audio.OpenAL;
 
 namespace OpenGL_Game.Scenes
 {
@@ -66,12 +67,14 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentPosition(-2.0f, 0.0f, 0.0f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
+            newEntity.AddComponent(new ComponentAudio("Audio/buzz.wav"));
             entityManager.AddEntity(newEntity);
 
             newEntity2 = new Entity("Wraith_Raider_Starship");
             newEntity2.AddComponent(new ComponentPosition(2.0f, 0.0f, 0.0f));
             newEntity2.AddComponent(new ComponentGeometry("Geometry/Intergalactic_Spaceship/Intergalactic_Spaceship.obj"));
             newEntity2.AddComponent(new ComponentVelocity(0.0f, 0.0f, 0.2f));
+            newEntity2.AddComponent(new ComponentShaderDefault());
             entityManager.AddEntity(newEntity2);
 
         }
@@ -83,6 +86,8 @@ namespace OpenGL_Game.Scenes
             newSystem = new SystemRender(gameInstance);
             systemManager.AddSystem(newSystem);
             newSystem = new SystemPhysics();
+            systemManager.AddSystem(newSystem);
+            newSystem = new SystemAudio();
             systemManager.AddSystem(newSystem);
         }
 
@@ -135,6 +140,8 @@ namespace OpenGL_Game.Scenes
                 sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
             }
 
+            AL.Listener(ALListener3f.Position, ref camera.cameraPosition);
+            AL.Listener(ALListenerfv.Orientation, ref camera.cameraDirection, ref camera.cameraUp);
 
             //System.Console.WriteLine("fps=" + (int)(1.0/dt));
 
@@ -168,6 +175,7 @@ namespace OpenGL_Game.Scenes
             sceneManager.keyboardUpDelegate -= Keyboard_KeyUp;
             //ResourceManager.RemoveAllAssets();
             // Need to remove assets (except Text) from Resource Manager
+            entityManager.Clear();
         }
 
         public void Keyboard_KeyDown(KeyboardKeyEventArgs e)

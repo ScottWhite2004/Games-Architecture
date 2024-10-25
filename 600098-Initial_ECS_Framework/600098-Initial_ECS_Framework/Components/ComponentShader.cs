@@ -28,5 +28,8 @@ namespace OpenGL_Game.Components
 
         public abstract void ApplyShader(Matrix4 model, Geometry geometry, GameScene scene);
 
+        public void Close()
+        {
+        }
     }
 }

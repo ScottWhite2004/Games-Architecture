@@ -20,11 +20,7 @@ namespace OpenGL_Game.Components
         
         protected ComponentShaderNoLight() : base("Shaders/text.vert", "Shaders/text.frag")
         {
-            uniform_stex;
-            uniform_mmodelviewproj;
-            uniform_mmodel;
-            unform_diffuse;
-        
+
         }
 
         public override void ApplyShader(Matrix4 model, Geometry geometry, GameScene scene)
