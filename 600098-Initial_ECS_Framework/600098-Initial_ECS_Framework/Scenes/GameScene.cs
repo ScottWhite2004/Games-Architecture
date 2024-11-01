@@ -68,6 +68,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
             newEntity.AddComponent(new ComponentAudio("Audio/buzz.wav"));
+            newEntity.AddComponent(new ComponentCollisionSphere(1));
             entityManager.AddEntity(newEntity);
 
             newEntity2 = new Entity("Wraith_Raider_Starship");
@@ -75,6 +76,7 @@ namespace OpenGL_Game.Scenes
             newEntity2.AddComponent(new ComponentGeometry("Geometry/Intergalactic_Spaceship/Intergalactic_Spaceship.obj"));
             newEntity2.AddComponent(new ComponentVelocity(0.0f, 0.0f, 0.2f));
             newEntity2.AddComponent(new ComponentShaderDefault());
+            newEntity2.AddComponent(new ComponentCollisionSphere(1));
             entityManager.AddEntity(newEntity2);
 
         }
@@ -89,6 +91,11 @@ namespace OpenGL_Game.Scenes
             systemManager.AddSystem(newSystem);
             newSystem = new SystemAudio();
             systemManager.AddSystem(newSystem);
+            newSystem = new SystemCollisionSphereSphere();
+            systemManager.AddSystem(newSystem);
+            newSystem = new SystemCollisionCameraSphere(camera);
+            systemManager.AddSystem(newSystem);
+
         }
 
         /// <summary>

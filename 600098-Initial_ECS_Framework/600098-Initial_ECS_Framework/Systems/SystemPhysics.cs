@@ -23,23 +23,26 @@ namespace OpenGL_Game.Systems
             get { return "SystemPhysics"; }
         }
 
-        public void OnAction(Entity entity)
+        public void OnAction(List<Entity> entityList)
         {
-            if ((entity.Mask & MASK) == MASK)
+            foreach (Entity entity in entityList)
             {
-                List<IComponent> components = entity.Components;
-
-                IComponent positionComponent = components.Find(delegate (IComponent component)
+                if ((entity.Mask & MASK) == MASK)
                 {
-                    return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
-                });
+                    List<IComponent> components = entity.Components;
 
-                IComponent velocityComponent = components.Find(delegate (IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_VELOCITY;
-                });
+                    IComponent positionComponent = components.Find(delegate (IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
+                    });
 
-                Motion((ComponentPosition)positionComponent , (ComponentVelocity)velocityComponent);
+                    IComponent velocityComponent = components.Find(delegate (IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_VELOCITY;
+                    });
+
+                    Motion((ComponentPosition)positionComponent, (ComponentVelocity)velocityComponent);
+                }
             }
         }
 

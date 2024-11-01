@@ -72,33 +72,36 @@ namespace OpenGL_Game.Systems
             get { return "SystemRender"; }
         }
 
-        public void OnAction(Entity entity)
+        public void OnAction(List<Entity> entityList)
         {
-            if ((entity.Mask & MASK) == MASK)
+            foreach (Entity entity in entityList)
             {
-                List<IComponent> components = entity.Components;
-
-                IComponent geometryComponent = components.Find(delegate(IComponent component)
+                if ((entity.Mask & MASK) == MASK)
                 {
-                    return component.ComponentType == ComponentTypes.COMPONENT_GEOMETRY;
-                });
-                Geometry geometry = ((ComponentGeometry)geometryComponent).Geometry();
+                    List<IComponent> components = entity.Components;
 
-                IComponent positionComponent = components.Find(delegate(IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
-                });
-                Vector3 position = ((ComponentPosition)positionComponent).Position;
-                Matrix4 model = Matrix4.CreateTranslation(position);
+                    IComponent geometryComponent = components.Find(delegate (IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_GEOMETRY;
+                    });
+                    Geometry geometry = ((ComponentGeometry)geometryComponent).Geometry();
 
-                IComponent shaderComponent = components.Find(delegate (IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_SHADER;
-                });
+                    IComponent positionComponent = components.Find(delegate (IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
+                    });
+                    Vector3 position = ((ComponentPosition)positionComponent).Position;
+                    Matrix4 model = Matrix4.CreateTranslation(position);
 
-                ComponentShader shader = ((ComponentShader)shaderComponent);
+                    IComponent shaderComponent = components.Find(delegate (IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_SHADER;
+                    });
 
-                Draw(model, geometry, shader);
+                    ComponentShader shader = ((ComponentShader)shaderComponent);
+
+                    Draw(model, geometry, shader);
+                }
             }
         }
 

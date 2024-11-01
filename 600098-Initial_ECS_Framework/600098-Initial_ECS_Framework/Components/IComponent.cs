@@ -10,6 +10,7 @@ namespace OpenGL_Game.Components
         COMPONENT_VELOCITY = 1 << 2,
         COMPONENT_SHADER = 1 << 3,
         COMPONENT_AUDIO = 1 << 4,
+        COMPONENT_COLLISIONSPHERE = 1 << 5,
     }
 
     interface IComponent
