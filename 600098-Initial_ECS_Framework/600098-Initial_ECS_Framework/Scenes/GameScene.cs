@@ -20,6 +20,7 @@ namespace OpenGL_Game.Scenes
         public static float dt = 0;
         EntityManager entityManager;
         SystemManager systemManager;
+        MazeCollisionManager collisionManager;
         public Camera camera;
         public static GameScene gameInstance;
         bool[] keysPressed;
@@ -31,6 +32,7 @@ namespace OpenGL_Game.Scenes
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
+            collisionManager = new MazeCollisionManager();
             keysPressed = new bool[511];
 
             // Set the title of the window
@@ -68,7 +70,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
             newEntity.AddComponent(new ComponentAudio("Audio/buzz.wav"));
-            newEntity.AddComponent(new ComponentCollisionSphere(1));
+            newEntity.AddComponent(new ComponentCollisionSphere(3));
             entityManager.AddEntity(newEntity);
 
             newEntity2 = new Entity("Wraith_Raider_Starship");
@@ -93,7 +95,7 @@ namespace OpenGL_Game.Scenes
             systemManager.AddSystem(newSystem);
             newSystem = new SystemCollisionSphereSphere();
             systemManager.AddSystem(newSystem);
-            newSystem = new SystemCollisionCameraSphere(camera);
+            newSystem = new SystemCollisionCameraSphere(camera, collisionManager);
             systemManager.AddSystem(newSystem);
 
         }
@@ -149,6 +151,7 @@ namespace OpenGL_Game.Scenes
 
             AL.Listener(ALListener3f.Position, ref camera.cameraPosition);
             AL.Listener(ALListenerfv.Orientation, ref camera.cameraDirection, ref camera.cameraUp);
+            collisionManager.ProcessCollisions();
 
             //System.Console.WriteLine("fps=" + (int)(1.0/dt));
 

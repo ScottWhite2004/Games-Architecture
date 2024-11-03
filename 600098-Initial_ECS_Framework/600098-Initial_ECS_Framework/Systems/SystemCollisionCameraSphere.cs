@@ -44,7 +44,10 @@ namespace OpenGL_Game.Systems
                     {
                         return component.ComponentType == ComponentTypes.COMPONENT_COLLISIONSPHERE;
                     });
-                    hasCollided(((ComponentPosition)positionComponent).Position, _camera.cameraPosition, ((ComponentCollisionSphere)sphereCollisionComponent).Radius);
+                    if(hasCollided(((ComponentPosition)positionComponent).Position, _camera.cameraPosition, ((ComponentCollisionSphere)sphereCollisionComponent).Radius))
+                    {
+                        _collisionManager.CollisionBetweenCamera(entity, CollisionType.CAMERA_SPHERE);
+                    }
                 }
             }
 

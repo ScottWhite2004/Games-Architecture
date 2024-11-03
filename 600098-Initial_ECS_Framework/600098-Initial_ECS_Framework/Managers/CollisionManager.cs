@@ -32,12 +32,23 @@ namespace OpenGL_Game.Managers
             collisionList.Clear();
         }
 
+        public void CollisionBetweenCamera(Entity entity, CollisionType collisionType)
+        {
+            foreach (Collision coll in collisionList)
+            {
+                if(coll.entity == entity)
+                {
+                    return;
+                }
+            }
 
+            Collision collision;
+            collision.entity = entity;
+            collision.collisionType = collisionType;
+            collisionList.Add(collision);
+        }
 
-
-
-
-
+        public abstract void ProcessCollisions();
 
     }
 }
