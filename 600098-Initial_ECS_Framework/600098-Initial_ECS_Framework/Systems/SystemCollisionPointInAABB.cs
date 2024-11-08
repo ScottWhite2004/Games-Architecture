@@ -32,19 +32,20 @@ namespace OpenGL_Game.Systems
 
         public void OnAction(List<Entity> entityList)
         {
-            _point = _camera.cameraPosition;
             foreach(Entity entity in entityList)
             {
                 if((entity.Mask & MASK) == MASK)
                 {
-                    List<IComponent> components = new List<IComponent>();
+                    List<IComponent> components = entity.Components;
 
                     IComponent aabbCollisionComponent = components.Find(delegate (IComponent component)
                     {
                         return component.ComponentType == ComponentTypes.COMPONENT_COLLISIONAABB;
                     });
 
-                    if (hasCollided((ComponentCollisionAABB)aabbCollisionComponent, _point))
+                    ComponentCollisionAABB componentCollisionAABB = (ComponentCollisionAABB)aabbCollisionComponent;
+                    
+                    if (hasCollided(componentCollisionAABB, _camera.cameraPosition))
                     {
                         _collisionManager.CollisionBetweenCamera(entity, CollisionType.POINT_IN_AABB);
                     }

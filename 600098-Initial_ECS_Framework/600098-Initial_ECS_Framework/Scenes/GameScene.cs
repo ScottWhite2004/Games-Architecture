@@ -99,6 +99,7 @@ namespace OpenGL_Game.Scenes
             newSystem = new SystemCollisionCameraSphere(camera, collisionManager);
             systemManager.AddSystem(newSystem);
             newSystem = new SystemCollisionPointInAABB(collisionManager, camera);
+            systemManager.AddSystem(newSystem);
 
         }
 
