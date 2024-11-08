@@ -218,6 +218,10 @@
     <None Remove=".gitignore" />
     <None Remove="OpenTK.dll.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Engine\" />
+    <Folder Include="Game\" />
+  </ItemGroup>
   <Target Name="BeforeResolveReferences">
   </Target>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

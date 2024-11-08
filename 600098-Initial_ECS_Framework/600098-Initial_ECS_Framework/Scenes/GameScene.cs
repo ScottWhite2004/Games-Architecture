@@ -18,6 +18,7 @@ namespace OpenGL_Game.Scenes
     class GameScene : Scene
     {
         public static float dt = 0;
+        public int score = 0;
         EntityManager entityManager;
         SystemManager systemManager;
         MazeCollisionManager collisionManager;
@@ -32,7 +33,7 @@ namespace OpenGL_Game.Scenes
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
-            collisionManager = new MazeCollisionManager();
+            collisionManager = new MazeCollisionManager(this);
             keysPressed = new bool[511];
 
             // Set the title of the window
@@ -70,7 +71,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
             newEntity.AddComponent(new ComponentAudio("Audio/buzz.wav"));
-            newEntity.AddComponent(new ComponentCollisionSphere(3));
+            newEntity.AddComponent(new ComponentCollisionAABB(-5,1,-3,3));
             entityManager.AddEntity(newEntity);
 
             newEntity2 = new Entity("Wraith_Raider_Starship");
@@ -97,6 +98,7 @@ namespace OpenGL_Game.Scenes
             systemManager.AddSystem(newSystem);
             newSystem = new SystemCollisionCameraSphere(camera, collisionManager);
             systemManager.AddSystem(newSystem);
+            newSystem = new SystemCollisionPointInAABB(collisionManager, camera);
 
         }
 
@@ -171,7 +173,7 @@ namespace OpenGL_Game.Scenes
             systemManager.ActionSystems(entityManager);
 
             // Render score
-            GUI.DrawText("Score: 000", 30, 80, 30, 255, 255, 255);
+            GUI.DrawText($"Score: {score}", 30, 80, 30, 255, 255, 255);
             GUI.Render();
         }
 
