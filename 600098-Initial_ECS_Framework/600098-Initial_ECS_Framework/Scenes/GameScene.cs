@@ -66,21 +66,26 @@ namespace OpenGL_Game.Scenes
             Entity newEntity;
             Entity newEntity2;
 
-            newEntity = new Entity("Moon");
-            newEntity.AddComponent(new ComponentPosition(-2.0f, 0.0f, 0.0f));
-            newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
-            newEntity.AddComponent(new ComponentShaderDefault());
-            newEntity.AddComponent(new ComponentAudio("Audio/buzz.wav"));
-            newEntity.AddComponent(new ComponentCollisionAABB(-5,1,-3,3));
-            entityManager.AddEntity(newEntity);
+            //newEntity = new Entity("Moon");
+            //newEntity.AddComponent(new ComponentPosition(-2.0f, 0.0f, 0.0f));
+            //newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
+            //newEntity.AddComponent(new ComponentShaderDefault());
+            //newEntity.AddComponent(new ComponentAudio("Audio/buzz.wav"));
+            //newEntity.AddComponent(new ComponentCollisionAABB(-5,1,-3,3));
+            //entityManager.AddEntity(newEntity);
 
-            newEntity2 = new Entity("Wraith_Raider_Starship");
-            newEntity2.AddComponent(new ComponentPosition(2.0f, 0.0f, 0.0f));
-            newEntity2.AddComponent(new ComponentGeometry("Geometry/Intergalactic_Spaceship/Intergalactic_Spaceship.obj"));
-            newEntity2.AddComponent(new ComponentVelocity(0.0f, 0.0f, 0.2f));
-            newEntity2.AddComponent(new ComponentShaderDefault());
-            newEntity2.AddComponent(new ComponentCollisionSphere(1));
-            entityManager.AddEntity(newEntity2);
+            //newEntity2 = new Entity("Wraith_Raider_Starship");
+            //newEntity2.AddComponent(new ComponentPosition(2.0f, 0.0f, 0.0f));
+            //newEntity2.AddComponent(new ComponentGeometry("Geometry/Intergalactic_Spaceship/Intergalactic_Spaceship.obj"));
+            //newEntity2.AddComponent(new ComponentVelocity(0.0f, 0.0f, 0.2f));
+            //newEntity2.AddComponent(new ComponentShaderDefault());
+            //newEntity2.AddComponent(new ComponentCollisionSphere(1));
+            //entityManager.AddEntity(newEntity2);
+
+            newEntity = new Entity("Moon");
+            newEntity.AddComponent(new ComponentPosition(0.0f, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Maze/Maze.obj"));
+            newEntity.AddComponent(new ComponentShaderDefault());
 
         }
 

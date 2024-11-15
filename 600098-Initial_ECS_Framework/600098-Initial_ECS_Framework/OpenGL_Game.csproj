@@ -49,6 +49,14 @@
     <ApplicationIcon />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Engine\**" />
+    <Compile Remove="Game\**" />
+    <EmbeddedResource Remove="Engine\**" />
+    <EmbeddedResource Remove="Game\**" />
+    <None Remove="Engine\**" />
+    <None Remove="Game\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="Geometry\Intergalactic_Spaceship\Intergalactic_Spaceship.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -62,6 +70,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Geometry\Intergalactic_Spaceship\Intergalactic_Spaceship_rough.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Geometry\Maze\brick.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Geometry\Maze\Maze.mtl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Geometry\Maze\Maze.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Geometry\Moon\moon.mtl">
@@ -217,10 +234,6 @@
     <None Remove=".gitattributes" />
     <None Remove=".gitignore" />
     <None Remove="OpenTK.dll.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Engine\" />
-    <Folder Include="Game\" />
   </ItemGroup>
   <Target Name="BeforeResolveReferences">
   </Target>
