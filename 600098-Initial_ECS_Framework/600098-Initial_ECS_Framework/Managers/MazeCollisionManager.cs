@@ -26,17 +26,12 @@ namespace OpenGL_Game.Managers
                     case CollisionType.SPHERE_SPHERE:
                         break;
                     case CollisionType.CAMERA_SPHERE:
-                        if(coll.entity.Name == "Moon")
-                        {
-                            sceneInstance.score++;
-                        }
-                        else
-                        {
-                            Debug.Assert(false, "Camera collided with something");
-                        }
                         break;
                     case CollisionType.POINT_IN_AABB:
-                        Debug.Assert(false, "Camera collided with something");
+                        if(coll.entity.Name == "Wall")
+                        {
+                            
+                        }
                         break;
                 
                 }
