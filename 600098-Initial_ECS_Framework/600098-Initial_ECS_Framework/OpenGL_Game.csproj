@@ -75,10 +75,10 @@
     <None Update="Geometry\Maze\brick.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Geometry\Maze\Maze.mtl">
+    <None Update="Geometry\Maze\maze.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Geometry\Maze\Maze.obj">
+    <None Update="Geometry\Maze\maze.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Geometry\Moon\moon.mtl">

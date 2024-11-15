@@ -84,8 +84,9 @@ namespace OpenGL_Game.Scenes
 
             newEntity = new Entity("Moon");
             newEntity.AddComponent(new ComponentPosition(0.0f, 0.0f, 0.0f));
-            newEntity.AddComponent(new ComponentGeometry("Geometry/Maze/Maze.obj"));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Maze/maze.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
+            entityManager.AddEntity(newEntity);
 
         }
 
