@@ -140,10 +140,7 @@ namespace OpenGL_Game.Scenes
 
             if (keysPressed[(char)Keys.Up])
             {
-                //camera.MoveForward(2.0f * dt);
-                playerPosition += camera.cameraDirection * 2.0f * dt;
-                camera.cameraPosition = playerPosition;
-                camera.UpdateView();
+                camera.MoveForward(2.0f * dt);
             }
             if (keysPressed[(char)Keys.Down])
             {
