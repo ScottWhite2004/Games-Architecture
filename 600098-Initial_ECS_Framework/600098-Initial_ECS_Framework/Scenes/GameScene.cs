@@ -25,6 +25,7 @@ namespace OpenGL_Game.Scenes
         public Camera camera;
         public static GameScene gameInstance;
         bool[] keysPressed;
+        Vector3 playerPosition;
 
         public GameScene(SceneManager sceneManager) : base(sceneManager)
         {
@@ -35,6 +36,7 @@ namespace OpenGL_Game.Scenes
             systemManager = new SystemManager();
             collisionManager = new MazeCollisionManager(this);
             keysPressed = new bool[511];
+            playerPosition = new Vector3(-2,4,7);
 
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -81,12 +83,12 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentCollisionAABB(-1.2f,0,0,20));
             entityManager.AddEntity(newEntity);
 
-            newEntity = new Entity("Player");
-            newEntity.AddComponent(new ComponentPosition(0.0f,0.0f,0.0f));
+            newEntity = new Entity("Moon");
+            newEntity.AddComponent(new ComponentPosition(-2.0f, 0.0f, 2.0f));
+            newEntity.AddComponent(new ComponentCollisionSphere(2));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
             entityManager.AddEntity(newEntity);
-
         }
 
         private void CreateSystems()
@@ -138,7 +140,10 @@ namespace OpenGL_Game.Scenes
 
             if (keysPressed[(char)Keys.Up])
             {
-                camera.MoveForward(2.0f * dt);
+                //camera.MoveForward(2.0f * dt);
+                playerPosition += camera.cameraDirection * 2.0f * dt;
+                camera.cameraPosition = playerPosition;
+                camera.UpdateView();
             }
             if (keysPressed[(char)Keys.Down])
             {
