@@ -68,6 +68,8 @@ namespace OpenGL_Game.Scenes
 
             GL.BindTexture(TextureTarget.Texture2D, 0);
             GL.Disable(EnableCap.Texture2D);
+            textImage.Dispose();
+            bmp.Dispose();
         }
 
         //Called by SceneManager onLoad, and when screen size is changed

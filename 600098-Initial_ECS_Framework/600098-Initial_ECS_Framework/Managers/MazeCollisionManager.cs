@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,13 +31,15 @@ namespace OpenGL_Game.Managers
                     case CollisionType.POINT_IN_AABB:
                         if(coll.entity.Name == "Wall")
                         {
-                            
+                            sceneInstance.camera.MoveForward(-0.01f);
                         }
                         break;
                 
                 }
 
             }
+
+            this.collisionList.Clear();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace OpenGL_Game.Scenes
         public GameScene(SceneManager sceneManager) : base(sceneManager)
         {
             // Set Camera
-            camera = new Camera(new Vector3(0, 4, 7), new Vector3(0, 0, 0), (float)(sceneManager.Size.X) / (float)(sceneManager.Size.Y), 0.1f, 100f);
+            camera = new Camera(new Vector3(-2, 4, 7), new Vector3(0, 0, 0), (float)(sceneManager.Size.X) / (float)(sceneManager.Size.Y), 0.1f, 100f);
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
@@ -73,12 +73,19 @@ namespace OpenGL_Game.Scenes
 
             newEntity = new Entity("Wall");
             newEntity.AddComponent(new ComponentPosition(0.0f,0.0f,0.0f));
-            newEntity.AddComponent(new ComponentCollisionAABB(-3,3,-3,3));
+            newEntity.AddComponent(new ComponentCollisionAABB(-20,0,0,1.2f));
             entityManager.AddEntity(newEntity);
 
+            newEntity = new Entity("Wall");
+            newEntity.AddComponent(new ComponentPosition(0.0f, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-1.2f,0,0,20));
+            entityManager.AddEntity(newEntity);
 
-
-
+            newEntity = new Entity("Player");
+            newEntity.AddComponent(new ComponentPosition(0.0f,0.0f,0.0f));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
+            newEntity.AddComponent(new ComponentShaderDefault());
+            entityManager.AddEntity(newEntity);
 
         }
 
@@ -131,19 +138,19 @@ namespace OpenGL_Game.Scenes
 
             if (keysPressed[(char)Keys.Up])
             {
-                camera.MoveForward(1.0f * dt);
+                camera.MoveForward(2.0f * dt);
             }
             if (keysPressed[(char)Keys.Down])
             {
-                camera.MoveForward(-1.0f * dt);
+                camera.MoveForward(-2.0f * dt);
             }
             if (keysPressed[(char)Keys.Right])
             {
-                camera.RotateY(0.1f * dt);
+                camera.RotateY(0.3f * dt);
             }
             if (keysPressed[(char)Keys.Left])
             {
-                camera.RotateY(-0.1f * dt);
+                camera.RotateY(-0.3f * dt);
             }
             if (keysPressed[(char)Keys.M])
             {
