@@ -12,6 +12,7 @@ namespace OpenGL_Game.Components
         COMPONENT_AUDIO = 1 << 4,
         COMPONENT_COLLISIONSPHERE = 1 << 5,
         COMPONENT_COLLISIONAABB = 1 << 6,
+        COMPONENT_FOLLOW = 1 << 7,
     }
 
     interface IComponent
