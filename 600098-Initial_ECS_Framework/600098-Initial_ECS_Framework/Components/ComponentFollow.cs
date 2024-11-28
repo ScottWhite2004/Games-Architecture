@@ -9,12 +9,14 @@ namespace OpenGL_Game.Components
 {
     internal class ComponentFollow : IComponent
     {
+        
+        public Camera camera;
         public ComponentTypes ComponentType
         { get { return ComponentTypes.COMPONENT_FOLLOW; } }
 
-        public ComponentFollow()
+        public ComponentFollow(Camera pCamera)
         {
-
+            camera = pCamera;
         }
 
         public void Close()

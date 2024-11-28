@@ -19,24 +19,26 @@ namespace OpenGL_Game.Scenes
     {
         public static float dt = 0;
         public int score = 0;
-        EntityManager entityManager;
+        public EntityManager entityManager;
         SystemManager systemManager;
         MazeCollisionManager collisionManager;
         public Camera camera;
         public static GameScene gameInstance;
         bool[] keysPressed;
         Vector3 playerPosition;
+        Vector3 playerVelocity;
 
         public GameScene(SceneManager sceneManager) : base(sceneManager)
         {
             // Set Camera
-            camera = new Camera(new Vector3(-2, 4, 7), new Vector3(0, 0, 0), (float)(sceneManager.Size.X) / (float)(sceneManager.Size.Y), 0.1f, 100f);
+            camera = new Camera(new Vector3(-2, 2, 7), new Vector3(0, 2, 0), (float)(sceneManager.Size.X) / (float)(sceneManager.Size.Y), 0.1f, 100f);
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
             collisionManager = new MazeCollisionManager(this);
             keysPressed = new bool[511];
             playerPosition = new Vector3(-2,4,7);
+            playerVelocity = new Vector3(0,0,0);
 
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -75,20 +77,31 @@ namespace OpenGL_Game.Scenes
 
             newEntity = new Entity("Wall");
             newEntity.AddComponent(new ComponentPosition(0.0f,0.0f,0.0f));
-            newEntity.AddComponent(new ComponentCollisionAABB(-20,0,0,1.2f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-100f,0,0,1.5f));
             entityManager.AddEntity(newEntity);
 
             newEntity = new Entity("Wall");
             newEntity.AddComponent(new ComponentPosition(0.0f, 0.0f, 0.0f));
-            newEntity.AddComponent(new ComponentCollisionAABB(-1.2f,0,0,20));
+            newEntity.AddComponent(new ComponentCollisionAABB(-1.5f,0,0,100f));
             entityManager.AddEntity(newEntity);
 
-            newEntity = new Entity("Moon");
-            newEntity.AddComponent(new ComponentPosition(-2.0f, 0.0f, 2.0f));
-            newEntity.AddComponent(new ComponentCollisionSphere(2));
+            newEntity = new Entity("Wall");
+            newEntity.AddComponent(new ComponentPosition(0, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-6.0f, 0.0f, 14.0f, 15.0f));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Key");
+            newEntity.AddComponent(new ComponentPosition(-20.0f,2f,10.0f));
+            newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
             entityManager.AddEntity(newEntity);
+
+            //newEntity = new Entity("Player");
+            //newEntity.AddComponent(new ComponentPosition(playerPosition));
+            //newEntity.AddComponent(new ComponentFollow(camera));
+            //newEntity.AddComponent(new ComponentVelocity(ref playerVelocity));
+            //entityManager.AddEntity(newEntity);
         }
 
         private void CreateSystems()
@@ -107,6 +120,8 @@ namespace OpenGL_Game.Scenes
             systemManager.AddSystem(newSystem);
             newSystem = new SystemCollisionPointInAABB(collisionManager, camera);
             systemManager.AddSystem(newSystem);
+            newSystem = new SystemFollow();
+            systemManager.AddSystem(newSystem);
 
         }
 
@@ -119,45 +134,27 @@ namespace OpenGL_Game.Scenes
         {
             dt = (float)e.Time;
 
-            //switch (e.Key)
-            //{
-            //    case Keys.Up:
-            //        camera.MoveForward(0.1f);
-            //        break;
-            //    case Keys.Down:
-            //        camera.MoveForward(-0.1f);
-            //        break;
-            //    case Keys.Left:
-            //        camera.RotateY(-0.01f);
-            //        break;
-            //    case Keys.Right:
-            //        camera.RotateY(0.01f);
-            //        break;
-            //    case Keys.M:
-            //        sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
-            //        break;
-            //}
-
             if (keysPressed[(char)Keys.Up])
             {
-                camera.MoveForward(2.0f * dt);
+                camera.MoveForward(3.0f *  dt);
             }
             if (keysPressed[(char)Keys.Down])
             {
-                camera.MoveForward(-2.0f * dt);
+                camera.MoveForward(-3.0f * dt);
             }
             if (keysPressed[(char)Keys.Right])
             {
-                camera.RotateY(0.3f * dt);
+                camera.RotateY(0.5f * dt);
             }
             if (keysPressed[(char)Keys.Left])
             {
-                camera.RotateY(-0.3f * dt);
+                camera.RotateY(-0.5f * dt);
             }
             if (keysPressed[(char)Keys.M])
             {
                 sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
             }
+            
 
             AL.Listener(ALListener3f.Position, ref camera.cameraPosition);
             AL.Listener(ALListenerfv.Orientation, ref camera.cameraDirection, ref camera.cameraUp);
@@ -182,6 +179,7 @@ namespace OpenGL_Game.Scenes
 
             // Render score
             GUI.DrawText($"Score: {score}", 30, 80, 30, 255, 255, 255);
+            GUI.DrawText($"X: {camera.cameraPosition.X}, Y: {camera.cameraPosition.Y}, Z: {camera.cameraPosition.Z}", 30, 110, 30, 255, 255, 255);
             GUI.Render();
         }
 

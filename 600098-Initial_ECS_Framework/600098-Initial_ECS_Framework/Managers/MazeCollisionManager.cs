@@ -27,16 +27,17 @@ namespace OpenGL_Game.Managers
                     case CollisionType.SPHERE_SPHERE:
                         break;
                     case CollisionType.CAMERA_SPHERE:
-                        if(coll.entity.Name == "Moon")
+                        if(coll.entity.Name == "Key")
                         {
                             sceneInstance.score++;
                             sceneInstance.camera.MoveForward(-0.01f);
+                            sceneInstance.entityManager.RemoveEntity(coll.entity);
                         }
                         break;
                     case CollisionType.POINT_IN_AABB:
                         if(coll.entity.Name == "Wall")
                         {
-                            sceneInstance.camera.MoveForward(-0.01f);
+                            sceneInstance.camera.MoveForward(-0.5f);
                         }
                         break;
                 
