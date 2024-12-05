@@ -14,6 +14,7 @@ namespace OpenGL_Game.Components
         COMPONENT_COLLISIONAABB = 1 << 6,
         COMPONENT_FOLLOW = 1 << 7,
         COMPONENT_KEYBOARDMOVEMENT = 1 << 8,
+        COMPONENT_AIDIRECTPATH = 1 << 9,
     }
 
     interface IComponent

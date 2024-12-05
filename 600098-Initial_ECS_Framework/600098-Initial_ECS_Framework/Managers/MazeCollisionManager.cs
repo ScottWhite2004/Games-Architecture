@@ -33,11 +33,36 @@ namespace OpenGL_Game.Managers
                             sceneInstance.camera.MoveForward(-0.01f);
                             sceneInstance.entityManager.RemoveEntity(coll.entity);
                         }
+                        if(coll.entity.Name == "Portal")
+                        {
+                            if(sceneInstance.score == 3)
+                            {
+                                sceneInstance.endGame();
+                            }
+                            else
+                            {
+                                sceneInstance.camera.MoveForward(-0.5f);
+                            }
+                        }
+                        if (coll.entity.Name == "Drone")
+                        {
+                            if (sceneInstance.lives > 0)
+                            {
+                                sceneInstance.entityManager.RemoveEntity(coll.entity);
+                                sceneInstance.resetPositions();
+                                sceneInstance.lives--;
+                            }
+                            else
+                            {
+                                sceneInstance.endGame();
+                            }
+                        }
                         break;
                     case CollisionType.POINT_IN_AABB:
                         if(coll.entity.Name == "Wall")
                         {
-                            sceneInstance.camera.MoveForward(-0.5f);
+                            sceneInstance.camera.cameraDirection = -sceneInstance.camera.cameraDirection;
+                            sceneInstance.camera.MoveForward(0.5f);
                         }
                         break;
                 

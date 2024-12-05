@@ -19,26 +19,27 @@ namespace OpenGL_Game.Scenes
     {
         public static float dt = 0;
         public int score = 0;
+        public int lives = 3;
         public EntityManager entityManager;
         SystemManager systemManager;
         MazeCollisionManager collisionManager;
         public Camera camera;
         public static GameScene gameInstance;
         bool[] keysPressed;
-        Vector3 playerPosition;
-        Vector3 playerVelocity;
+        Vector3 playerStart;
+        Vector3 droneStart;
 
         public GameScene(SceneManager sceneManager) : base(sceneManager)
         {
             // Set Camera
-            camera = new Camera(new Vector3(-2, 2, 7), new Vector3(0, 2, 0), (float)(sceneManager.Size.X) / (float)(sceneManager.Size.Y), 0.1f, 100f);
+            playerStart = new Vector3(-2, 2, 7);
+            droneStart = new Vector3(-30.0f, 1.0f, 30.0f);
+            camera = new Camera(new Vector3(playerStart), new Vector3(0, 2, 0), (float)(sceneManager.Size.X) / (float)(sceneManager.Size.Y), 0.1f, 100f);
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
             collisionManager = new MazeCollisionManager(this);
             keysPressed = new bool[511];
-            playerPosition = new Vector3(-2,4,7);
-            playerVelocity = new Vector3(0,0,0);
 
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -75,6 +76,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentShaderDefault());
             entityManager.AddEntity(newEntity);
 
+            #region wallEntities
             newEntity = new Entity("Wall");
             newEntity.AddComponent(new ComponentPosition(0.0f,0.0f,0.0f));
             newEntity.AddComponent(new ComponentCollisionAABB(-100f,0,0,1.5f));
@@ -87,21 +89,113 @@ namespace OpenGL_Game.Scenes
 
             newEntity = new Entity("Wall");
             newEntity.AddComponent(new ComponentPosition(0, 0.0f, 0.0f));
-            newEntity.AddComponent(new ComponentCollisionAABB(-6.0f, 0.0f, 14.0f, 15.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-7.0f, 0.0f, 14.0f, 15.0f));
             entityManager.AddEntity(newEntity);
 
+            newEntity = new Entity("Wall");
+            newEntity.AddComponent(new ComponentPosition(0, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-7.0f, -6.0f, 15.0f, 40.0f));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Wall");
+            newEntity.AddComponent(new ComponentPosition(0, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-7.0f, 0.0f, 40.0f, 41.0f));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Wall");
+            newEntity.AddComponent(new ComponentPosition(0, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-100f, 0.0f, 54.0f, 55.5f));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Wall");
+            newEntity.AddComponent(new ComponentPosition(0, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-16.0f, -14.0f, 50.0f, 54.0f));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Wall");
+            newEntity.AddComponent(new ComponentPosition(0, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-40.0f, -16.0f, 50.0f, 52.0f));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Wall");
+            newEntity.AddComponent(new ComponentPosition(0, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-42.0f, -40.0f, 49.0f, 54.0f));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Wall");
+            newEntity.AddComponent(new ComponentPosition(0, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-55.0f, -54.5f,0.0f, 54.0f));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Wall");
+            newEntity.AddComponent(new ComponentPosition(0, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-55.0f, -51.0f, 41.0f, 42.5f));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Wall");
+            newEntity.AddComponent(new ComponentPosition(0, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-50.0f, -49.5f, 14.0f, 42.0f));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Wall");
+            newEntity.AddComponent(new ComponentPosition(0, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-55.0f, -51.0f, 14.0f, 15.0f));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Wall");
+            newEntity.AddComponent(new ComponentPosition(0, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-42.5f, -40.0f, 0.0f, 6.0f));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Wall");
+            newEntity.AddComponent(new ComponentPosition(0, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-42.5f, -14.0f, 6.0f, 7.5f));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Wall");
+            newEntity.AddComponent(new ComponentPosition(0, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionAABB(-15.0f, -14.0f, 0.0f, 7.5f));
+            entityManager.AddEntity(newEntity);
+            #endregion
+
             newEntity = new Entity("Key");
-            newEntity.AddComponent(new ComponentPosition(-20.0f,2f,10.0f));
+            newEntity.AddComponent(new ComponentPosition(-20.0f,1.0f,10.0f));
             newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
-            newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Key/Key.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
             entityManager.AddEntity(newEntity);
 
-            //newEntity = new Entity("Player");
-            //newEntity.AddComponent(new ComponentPosition(playerPosition));
-            //newEntity.AddComponent(new ComponentFollow(camera));
-            //newEntity.AddComponent(new ComponentVelocity(ref playerVelocity));
-            //entityManager.AddEntity(newEntity);
+            newEntity = new Entity("Key");
+            newEntity.AddComponent(new ComponentPosition(-40.0f, 1.0f, 10.0f));
+            newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Key/Key.obj"));
+            newEntity.AddComponent(new ComponentShaderDefault());
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Key");
+            newEntity.AddComponent(new ComponentPosition(-45.0f, 1.0f, 10.0f));
+            newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Key/Key.obj"));
+            newEntity.AddComponent(new ComponentShaderDefault());
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Portal");
+            newEntity.AddComponent(new ComponentPosition(-14.0f, 0.0f, 3.5f));
+            newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Portal/Portal.obj"));
+            newEntity.AddComponent(new ComponentShaderDefault());
+            newEntity.AddComponent(new ComponentAudio("Audio/buzz.wav"));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Drone");
+            newEntity.AddComponent(new ComponentPosition(droneStart));
+            newEntity.AddComponent(new ComponentCollisionSphere(1.5f));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Drone/Drone.obj"));
+            newEntity.AddComponent(new ComponentShaderDefault());
+            newEntity.AddComponent(new ComponentVelocity(new Vector3(0.0f, 0.0f, 0.0f)));
+            newEntity.AddComponent(new ComponentAIDirectPath(30.0f, 1.0f));
+            entityManager.AddEntity(newEntity);
+
         }
 
         private void CreateSystems()
@@ -121,6 +215,8 @@ namespace OpenGL_Game.Scenes
             newSystem = new SystemCollisionPointInAABB(collisionManager, camera);
             systemManager.AddSystem(newSystem);
             newSystem = new SystemFollow();
+            systemManager.AddSystem(newSystem);
+            newSystem = new SystemAIDirectPath(camera);
             systemManager.AddSystem(newSystem);
 
         }
@@ -152,7 +248,7 @@ namespace OpenGL_Game.Scenes
             }
             if (keysPressed[(char)Keys.M])
             {
-                sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
+                endGame();
             }
             
 
@@ -177,10 +273,12 @@ namespace OpenGL_Game.Scenes
             // Action ALL systems
             systemManager.ActionSystems(entityManager);
 
-            // Render score
+            // Render score and lives
             GUI.DrawText($"Score: {score}", 30, 80, 30, 255, 255, 255);
             GUI.DrawText($"X: {camera.cameraPosition.X}, Y: {camera.cameraPosition.Y}, Z: {camera.cameraPosition.Z}", 30, 110, 30, 255, 255, 255);
+            GUI.DrawText($"Lives: {lives}", 30, 140, 30, 255, 255, 255);
             GUI.Render();
+
         }
 
         /// <summary>
@@ -204,6 +302,24 @@ namespace OpenGL_Game.Scenes
         public void Keyboard_KeyUp(KeyboardKeyEventArgs e)
         {
             keysPressed[((Char)e.Key)] = false;
+        }
+
+        public void endGame()
+        {
+            sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
+        }
+
+        public void resetPositions()
+        {
+            camera.cameraPosition = playerStart;
+            Entity newEntity;
+            newEntity = new Entity("Drone");
+            newEntity.AddComponent(new ComponentPosition(droneStart));
+            newEntity.AddComponent(new ComponentCollisionSphere(3.0f));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Drone/Drone.obj"));
+            newEntity.AddComponent(new ComponentShaderDefault());
+            entityManager.AddEntity(newEntity);
+
         }
     }
 }

@@ -11,7 +11,7 @@ namespace OpenGL_Game.Components
             velocity = new Vector3(x, y, z);
         }
 
-        public ComponentVelocity(ref Vector3 pVelocity)
+        public ComponentVelocity(Vector3 pVelocity)
         {
             velocity = pVelocity;
         }
