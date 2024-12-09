@@ -32,9 +32,9 @@ namespace OpenGL_Game.Scenes
         public GameScene(SceneManager sceneManager) : base(sceneManager)
         {
             // Set Camera
-            playerStart = new Vector3(-2, 2, 7);
+            playerStart = new Vector3(-2.0f, 2.0f, 50.0f);
             droneStart = new Vector3(-30.0f, 1.0f, 30.0f);
-            camera = new Camera(new Vector3(playerStart), new Vector3(0, 2, 0), (float)(sceneManager.Size.X) / (float)(sceneManager.Size.Y), 0.1f, 100f);
+            camera = new Camera(new Vector3(playerStart), new Vector3(-50, 2, 50), (float)(sceneManager.Size.X) / (float)(sceneManager.Size.Y), 0.1f, 100f);
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
@@ -159,14 +159,7 @@ namespace OpenGL_Game.Scenes
             #endregion
 
             newEntity = new Entity("Key");
-            newEntity.AddComponent(new ComponentPosition(-20.0f,1.0f,10.0f));
-            newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
-            newEntity.AddComponent(new ComponentGeometry("Geometry/Key/Key.obj"));
-            newEntity.AddComponent(new ComponentShaderDefault());
-            entityManager.AddEntity(newEntity);
-
-            newEntity = new Entity("Key");
-            newEntity.AddComponent(new ComponentPosition(-40.0f, 1.0f, 10.0f));
+            newEntity.AddComponent(new ComponentPosition(-10.0f,1.0f,10.0f));
             newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Key/Key.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
@@ -179,8 +172,15 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentShaderDefault());
             entityManager.AddEntity(newEntity);
 
+            newEntity = new Entity("Key");
+            newEntity.AddComponent(new ComponentPosition(-45.0f, 1.0f, 50.0f));
+            newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Key/Key.obj"));
+            newEntity.AddComponent(new ComponentShaderDefault());
+            entityManager.AddEntity(newEntity);
+
             newEntity = new Entity("Portal");
-            newEntity.AddComponent(new ComponentPosition(-14.0f, 0.0f, 3.5f));
+            newEntity.AddComponent(new ComponentPosition(-14.0f, 0.0f, 53.5f));
             newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Portal/Portal.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
@@ -195,6 +195,15 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentVelocity(new Vector3(0.0f, 0.0f, 0.0f)));
             newEntity.AddComponent(new ComponentAIDirectPath(30.0f, 1.0f));
             entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Skybox");
+            newEntity.AddComponent(new ComponentPosition(droneStart));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Skybox/Skybox.obj"));
+            newEntity.AddComponent(new ComponentShaderDefault());
+            newEntity.AddComponent(new ComponentSkyBox(camera.cameraPosition));
+            entityManager.AddEntity(newEntity);
+
+
 
         }
 
@@ -218,7 +227,8 @@ namespace OpenGL_Game.Scenes
             systemManager.AddSystem(newSystem);
             newSystem = new SystemAIDirectPath(camera);
             systemManager.AddSystem(newSystem);
-
+            newSystem = new SystemSkyBox(camera);
+            systemManager.AddSystem(newSystem);
         }
 
         /// <summary>
@@ -318,6 +328,8 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentCollisionSphere(3.0f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Drone/Drone.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
+            newEntity.AddComponent(new ComponentVelocity(new Vector3(0.0f, 0.0f, 0.0f)));
+            newEntity.AddComponent(new ComponentAIDirectPath(30.0f, 1.0f));
             entityManager.AddEntity(newEntity);
 
         }
