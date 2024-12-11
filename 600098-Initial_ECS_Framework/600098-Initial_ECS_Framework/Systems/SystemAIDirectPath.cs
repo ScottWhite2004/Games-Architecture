@@ -52,6 +52,7 @@ namespace OpenGL_Game.Systems
                     ((ComponentVelocity)velocityComponent).Velocity = Steering(directPath.detectionDistance, position.Position, camera.cameraPosition, directPath.moveSpeed);
 
                 }
+
             }
         }
 

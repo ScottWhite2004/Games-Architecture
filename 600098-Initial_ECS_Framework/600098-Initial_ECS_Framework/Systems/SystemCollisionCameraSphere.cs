@@ -29,7 +29,7 @@ namespace OpenGL_Game.Systems
 
         public void OnAction(List<Entity> entityList)
         {
-            foreach (Entity entity in entityList)
+            foreach(Entity entity in entityList)
             {
                 if ((entity.Mask & MASK) == MASK)
                 {

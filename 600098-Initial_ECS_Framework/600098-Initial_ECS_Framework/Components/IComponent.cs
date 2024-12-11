@@ -16,6 +16,8 @@ namespace OpenGL_Game.Components
         COMPONENT_KEYBOARDMOVEMENT = 1 << 8,
         COMPONENT_AIDIRECTPATH = 1 << 9,
         COMPONENT_SKYBOX = 1 << 10,
+        COMPONENT_AIPATHFINDING = 1 << 11,
+        COMPONENT_PATHPOINT = 1 << 12,
     }
 
     interface IComponent
