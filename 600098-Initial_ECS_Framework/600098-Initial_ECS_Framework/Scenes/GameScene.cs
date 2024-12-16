@@ -32,7 +32,7 @@ namespace OpenGL_Game.Scenes
         public GameScene(SceneManager sceneManager) : base(sceneManager)
         {
             // Set Camera
-            playerStart = new Vector3(-40.0f, 2.0f, 9.0f);
+            playerStart = new Vector3(-4.0f, 2.0f, 53.5f);
             droneStart = new Vector3(-30.0f, 1.0f, 30.0f);
             camera = new Camera(new Vector3(playerStart), new Vector3(-50, 2, 50), (float)(sceneManager.Size.X) / (float)(sceneManager.Size.Y), 0.1f, 100f);
             gameInstance = this;
@@ -162,6 +162,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentPosition(-10.0f,1.0f,10.0f));
             newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Key/Key.obj"));
+            newEntity.AddComponent(new ComponentAudio("Audio/coin.wav", true));
             newEntity.AddComponent(new ComponentShaderDefault());
             entityManager.AddEntity(newEntity);
 
@@ -169,6 +170,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentPosition(-45.0f, 1.0f, 10.0f));
             newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Key/Key.obj"));
+            newEntity.AddComponent(new ComponentAudio("Audio/coin.wav", true));
             newEntity.AddComponent(new ComponentShaderDefault());
             entityManager.AddEntity(newEntity);
 
@@ -176,6 +178,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentPosition(-45.0f, 1.0f, 50.0f));
             newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Key/Key.obj"));
+            newEntity.AddComponent(new ComponentAudio("Audio/coin.wav", true));
             newEntity.AddComponent(new ComponentShaderDefault());
             entityManager.AddEntity(newEntity);
 
@@ -184,7 +187,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Portal/Portal.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
-            newEntity.AddComponent(new ComponentAudio("Audio/buzz.wav"));
+            newEntity.AddComponent(new ComponentAudio("Audio/buzz.wav", false));
             entityManager.AddEntity(newEntity);
 
             newEntity = new Entity("Drone");
@@ -233,16 +236,65 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentPathPoint());
             entityManager.AddEntity(newEntity);
 
+            newEntity = new Entity("Point");
             newEntity.AddComponent(new ComponentPosition(-50.0f, 1.0f, 28.0f));
             newEntity.AddComponent(new ComponentPathPoint());
             entityManager.AddEntity(newEntity);
 
+            newEntity = new Entity("Point");
             newEntity.AddComponent(new ComponentPosition(-50.0f, 1.0f, 48.0f));
             newEntity.AddComponent(new ComponentPathPoint());
             entityManager.AddEntity(newEntity);
 
+            newEntity = new Entity("Point");
             newEntity.AddComponent(new ComponentPosition(-28.0f, 1.0f, 48.0f));
             newEntity.AddComponent(new ComponentPathPoint());
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Rolling Obstacle");
+            newEntity.AddComponent(new ComponentPosition(-45.0f, 0.0f, 45.0f));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Rolling/rolling.obj"));
+            newEntity.AddComponent(new ComponentShaderDefault());
+            newEntity.AddComponent(new ComponentCollisionSphere(4.0f));
+            newEntity.AddComponent(new ComponentRoaming());
+            newEntity.AddComponent(new ComponentVelocity(0.0f, 0.0f, 0.0f));
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Roaming Point");
+            newEntity.AddComponent(new ComponentPosition(-43.0f, 0.0f, 53.0f));
+            newEntity.AddComponent(new ComponentRoamingPoints());
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Roaming Point");
+            newEntity.AddComponent(new ComponentPosition(-48.0f, 0.0f, 53.0f));
+            newEntity.AddComponent(new ComponentRoamingPoints());
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Roaming Point");
+            newEntity.AddComponent(new ComponentPosition(-52.0f, 0.0f, 53.0f));
+            newEntity.AddComponent(new ComponentRoamingPoints());
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Roaming Point");
+            newEntity.AddComponent(new ComponentPosition(-43.0f, 0.0f, 43.0f));
+            newEntity.AddComponent(new ComponentRoamingPoints());
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Roaming Point");
+            newEntity.AddComponent(new ComponentPosition(-48.0f, 0.0f, 43.0f));
+            newEntity.AddComponent(new ComponentRoamingPoints());
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Roaming Point");
+            newEntity.AddComponent(new ComponentPosition(-52.0f, 0.0f, 43.0f));
+            newEntity.AddComponent(new ComponentRoamingPoints());
+            entityManager.AddEntity(newEntity);
+
+            newEntity = new Entity("Bouncing Obstacle");
+            newEntity.AddComponent(new ComponentPosition(-50.0f, 1.0f, 10.0f));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Bouncing_Ball/bouncing_ball.obj"));
+            newEntity.AddComponent(new ComponentShaderDefault());
+            newEntity.AddComponent(new ComponentCollisionSphere(2.0f));
             entityManager.AddEntity(newEntity);
 
 
@@ -272,6 +324,8 @@ namespace OpenGL_Game.Scenes
             newSystem = new SystemSkyBox(camera);
             systemManager.AddSystem(newSystem);
             newSystem = new SystemAIPathfinding(camera);
+            systemManager.AddSystem(newSystem);
+            newSystem = new SystemRoaming();
             systemManager.AddSystem(newSystem);
         }
 

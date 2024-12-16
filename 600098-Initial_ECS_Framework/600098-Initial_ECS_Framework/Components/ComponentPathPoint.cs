@@ -12,7 +12,6 @@ namespace OpenGL_Game.Components
 
         public void Close()
         {
-            throw new NotImplementedException();
         }
     }
 }

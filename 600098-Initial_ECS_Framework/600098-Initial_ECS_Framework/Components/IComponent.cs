@@ -18,6 +18,8 @@ namespace OpenGL_Game.Components
         COMPONENT_SKYBOX = 1 << 10,
         COMPONENT_AIPATHFINDING = 1 << 11,
         COMPONENT_PATHPOINT = 1 << 12,
+        COMPONENT_ROAMING = 1 << 13,
+        COMPONENT_ROAMINGPOINT = 1 << 14,
     }
 
     interface IComponent
