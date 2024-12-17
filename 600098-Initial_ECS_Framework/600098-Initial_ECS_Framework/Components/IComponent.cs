@@ -20,6 +20,8 @@ namespace OpenGL_Game.Components
         COMPONENT_PATHPOINT = 1 << 12,
         COMPONENT_ROAMING = 1 << 13,
         COMPONENT_ROAMINGPOINT = 1 << 14,
+        COMPONENT_BOUNCING = 1 << 15,
+        COMPONENT_MOVEBACKFORTH = 1 << 16,
     }
 
     interface IComponent

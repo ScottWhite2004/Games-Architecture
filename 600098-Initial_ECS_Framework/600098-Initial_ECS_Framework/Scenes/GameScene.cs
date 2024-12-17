@@ -291,10 +291,13 @@ namespace OpenGL_Game.Scenes
             entityManager.AddEntity(newEntity);
 
             newEntity = new Entity("Bouncing Obstacle");
-            newEntity.AddComponent(new ComponentPosition(-50.0f, 1.0f, 10.0f));
+            newEntity.AddComponent(new ComponentPosition(-50.0f, 1.0f, 3.0f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Bouncing_Ball/bouncing_ball.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
             newEntity.AddComponent(new ComponentCollisionSphere(2.0f));
+            newEntity.AddComponent(new ComponentBouncing(5.0f, 1.5f));
+            newEntity.AddComponent(new ComponentVelocity(0.0f, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentMoveBackAndForth(new Vector3(-50.0f, 1.0f, 15.0f), new Vector3(-50.0f, 1.0f, 3.0f)));
             entityManager.AddEntity(newEntity);
 
 
@@ -326,6 +329,10 @@ namespace OpenGL_Game.Scenes
             newSystem = new SystemAIPathfinding(camera);
             systemManager.AddSystem(newSystem);
             newSystem = new SystemRoaming();
+            systemManager.AddSystem(newSystem);
+            newSystem = new SystemBouncing();
+            systemManager.AddSystem(newSystem);
+            newSystem = new SystemMoveBackAndForth();
             systemManager.AddSystem(newSystem);
         }
 

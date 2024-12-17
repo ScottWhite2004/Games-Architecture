@@ -13,8 +13,8 @@ namespace OpenGL_Game.Systems
     {
 
         Camera camera;
-        
-        const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_AIDIRECTPATH | ComponentTypes.COMPONENT_VELOCITY);
+
+        const ComponentTypes MASK = ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_AIDIRECTPATH | ComponentTypes.COMPONENT_VELOCITY;
         public string Name
         { get { return "SystemAIDirectPath"; } }
 
