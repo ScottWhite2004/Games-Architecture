@@ -47,6 +47,10 @@ namespace OpenGL_Game.Systems
             emitterAudio.setPosition(emitterPosition);
         }
 
+        public void reset()
+        {
+        }
+
         public SystemAudio()
         {
 

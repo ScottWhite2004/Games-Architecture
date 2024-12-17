@@ -85,5 +85,9 @@ namespace OpenGL_Game.Systems
             dist = MathF.Sqrt(dist);
             return dist;
         }
+
+        public void reset()
+        {
+        }
     }
 }

@@ -69,5 +69,9 @@ namespace OpenGL_Game.Systems
                 return new Vector3(0.0f, 0.0f, 0.0f);
             }
         }
+
+        public void reset()
+        {
+        }
     }
 }

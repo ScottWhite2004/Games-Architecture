@@ -43,6 +43,10 @@ namespace OpenGL_Game.Systems
             }
         }
 
+        public void reset()
+        {
+        }
+
         public void updatePosition(ComponentFollow componentFollow, Vector3 position)
         {
             componentFollow.camera.cameraPosition = (position.X,position.Y, position.Z+3);

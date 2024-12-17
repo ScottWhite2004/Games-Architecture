@@ -36,5 +36,10 @@ namespace OpenGL_Game.Managers
             }
             );
         }
+
+        public void resetSystem(string name)
+        {
+            FindSystem(name).reset();
+        }
     }
 }

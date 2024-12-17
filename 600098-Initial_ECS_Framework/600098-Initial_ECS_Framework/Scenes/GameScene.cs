@@ -196,7 +196,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentGeometry("Geometry/Drone/Drone.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
             newEntity.AddComponent(new ComponentVelocity(new Vector3(0.0f, 0.0f, 0.0f)));
-            newEntity.AddComponent(new ComponentAIPathfinding(camera.cameraPosition, 1.0f));
+            newEntity.AddComponent(new ComponentAIPathfinding(camera.cameraPosition, 2.0f));
             entityManager.AddEntity(newEntity);
 
             newEntity = new Entity("Skybox");
@@ -427,9 +427,8 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentGeometry("Geometry/Drone/Drone.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
             newEntity.AddComponent(new ComponentVelocity(new Vector3(0.0f, 0.0f, 0.0f)));
-            newEntity.AddComponent(new ComponentAIPathfinding(camera.cameraPosition, 1.0f));
+            newEntity.AddComponent(new ComponentAIPathfinding(camera.cameraPosition, 2.0f));
             entityManager.AddEntity(newEntity);
-
         }
     }
 }

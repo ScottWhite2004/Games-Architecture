@@ -51,5 +51,8 @@ namespace OpenGL_Game.Systems
             position.Position += velocity.Velocity * GameScene.dt;
         }
 
+        public void reset()
+        {
+        }
     }
 }

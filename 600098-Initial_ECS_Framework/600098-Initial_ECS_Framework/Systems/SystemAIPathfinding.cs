@@ -20,8 +20,6 @@ namespace OpenGL_Game.Systems
         Camera camera;
         List<Vector3> Nodes;
 
-        private Vector3 currentNode;
-        private Entity nextNode;
         public SystemAIPathfinding(Camera pCamera)
         {
             camera = pCamera;
@@ -76,12 +74,13 @@ namespace OpenGL_Game.Systems
                         }
                     }
 
-
-                    Vector3 nodeToGoTo = pathFinding(Nodes, ((ComponentPosition)positionComponent).Position, camera.cameraPosition);
-                    ((ComponentVelocity)velocityComponent).Velocity = steering(((ComponentPosition)positionComponent).Position, nodeToGoTo, speed);
-                    if(vectorDistance(((ComponentPosition)positionComponent).Position, nodeToGoTo) < 0.1f)
+                    Vector3 currentNode = ((ComponentAIPathfinding)pathfindingComponent).currentNode;
+                    
+                    if (currentNode.Length == 0 || vectorDistance(((ComponentPosition)positionComponent).Position, currentNode) < 0.1f)
                     {
-                        currentNode = nodeToGoTo;
+                        Vector3 nodeToGoTo = pathFinding(Nodes, ((ComponentPosition)positionComponent).Position, camera.cameraPosition, currentNode);
+                        ((ComponentVelocity)velocityComponent).Velocity = steering(((ComponentPosition)positionComponent).Position, nodeToGoTo, speed);
+                        ((ComponentAIPathfinding)pathfindingComponent).currentNode = nodeToGoTo;
                     }
                 }
                 else
@@ -103,12 +102,19 @@ namespace OpenGL_Game.Systems
         public float weightedDistance(Vector3 startPosition, Vector3 pointPosition, Vector3 goalPosition)
         {
             float targetDistance = vectorDistance(startPosition, pointPosition);
-            float pointDistance = vectorDistance(pointPosition, goalPosition);
-            return targetDistance + pointDistance;
+            if (targetDistance < 27.0f)
+            {
+                float pointDistance = vectorDistance(pointPosition, goalPosition);
+                return targetDistance + pointDistance;
+            }
+            else
+            {
+                return 1000.0f;
+            }
 
         }
 
-        public Vector3 pathFinding(List<Vector3> pNodes, Vector3 startPosition, Vector3 targetPosition)
+        public Vector3 pathFinding(List<Vector3> pNodes, Vector3 startPosition, Vector3 targetPosition, Vector3 currentNode)
         {
             float distance = 0;
             Vector3 chosenNode = new Vector3(0, 0, 0);
@@ -153,5 +159,10 @@ namespace OpenGL_Game.Systems
                 return force.Normalized() * speed;
             }
         }
+
+        public void reset()
+        {
+        }
+
     }
 }

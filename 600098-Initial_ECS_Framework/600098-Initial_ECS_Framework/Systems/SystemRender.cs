@@ -121,5 +121,9 @@ namespace OpenGL_Game.Systems
             //GL.UseProgram(0);
             shaderComponent.ApplyShader(model, geometry, scene);
         }
+
+        public void reset()
+        {
+        }
     }
 }

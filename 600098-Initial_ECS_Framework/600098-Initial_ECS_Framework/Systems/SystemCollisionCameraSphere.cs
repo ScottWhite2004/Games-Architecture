@@ -62,5 +62,10 @@ namespace OpenGL_Game.Systems
             }
             return false;
         }
+
+        public void reset()
+        {
+
+        }
     }
 }

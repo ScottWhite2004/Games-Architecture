@@ -11,11 +11,13 @@ namespace OpenGL_Game.Components
     {
         Vector3 targetPosition;
         public float speed;
+        public Vector3 currentNode;
 
         public ComponentAIPathfinding(Vector3 pTargetPosition, float pSpeed)
         {
             targetPosition = pTargetPosition;
             speed = pSpeed;
+            currentNode = new Vector3(0,0,0);
         }
         
         public ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_AIPATHFINDING; } }

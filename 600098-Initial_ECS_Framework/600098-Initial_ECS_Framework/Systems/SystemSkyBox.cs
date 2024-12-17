@@ -48,6 +48,10 @@ namespace OpenGL_Game.Systems
             }
         }
 
+        public void reset()
+        {
+        }
+
         public void updateSkybox(ComponentPosition position, ComponentSkyBox skyBox)
         {
             position.Position = camera.cameraPosition;

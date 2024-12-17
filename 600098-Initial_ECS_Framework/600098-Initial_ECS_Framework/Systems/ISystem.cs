@@ -7,10 +7,13 @@ namespace OpenGL_Game.Systems
     {
         void OnAction(List<Entity> entityList);
 
+        void reset();
+
         // Property signatures: 
         string Name
         {
             get;
         }
+
     }
 }
