@@ -9,6 +9,7 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 using OpenTK.Mathematics;
 using SkiaSharp;
 using OpenTK.Audio.OpenAL;
+using System.Collections.Generic;
 
 namespace OpenGL_Game.Scenes
 {
@@ -28,6 +29,7 @@ namespace OpenGL_Game.Scenes
         bool[] keysPressed;
         Vector3 playerStart;
         Vector3 droneStart;
+        public bool[] keysCollected;
 
         public GameScene(SceneManager sceneManager) : base(sceneManager)
         {
@@ -40,6 +42,7 @@ namespace OpenGL_Game.Scenes
             systemManager = new SystemManager();
             collisionManager = new MazeCollisionManager(this);
             keysPressed = new bool[511];
+            keysCollected = new bool[3];
 
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -158,7 +161,7 @@ namespace OpenGL_Game.Scenes
             entityManager.AddEntity(newEntity);
             #endregion
 
-            newEntity = new Entity("Key");
+            newEntity = new Entity("Key 3");
             newEntity.AddComponent(new ComponentPosition(-10.0f,1.0f,10.0f));
             newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Key/Key.obj"));
@@ -166,7 +169,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentShaderDefault());
             entityManager.AddEntity(newEntity);
 
-            newEntity = new Entity("Key");
+            newEntity = new Entity("Key 2");
             newEntity.AddComponent(new ComponentPosition(-45.0f, 1.0f, 10.0f));
             newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Key/Key.obj"));
@@ -174,7 +177,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentShaderDefault());
             entityManager.AddEntity(newEntity);
 
-            newEntity = new Entity("Key");
+            newEntity = new Entity("Key 1");
             newEntity.AddComponent(new ComponentPosition(-45.0f, 1.0f, 50.0f));
             newEntity.AddComponent(new ComponentCollisionSphere(2.5f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Key/Key.obj"));
@@ -295,7 +298,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentGeometry("Geometry/Bouncing_Ball/bouncing_ball.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
             newEntity.AddComponent(new ComponentCollisionSphere(2.0f));
-            newEntity.AddComponent(new ComponentBouncing(5.0f, 1.5f));
+            //newEntity.AddComponent(new ComponentBouncing(5.0f, 1.5f));
             newEntity.AddComponent(new ComponentVelocity(0.0f, 0.0f, 0.0f));
             newEntity.AddComponent(new ComponentMoveBackAndForth(new Vector3(-50.0f, 1.0f, 15.0f), new Vector3(-50.0f, 1.0f, 3.0f)));
             entityManager.AddEntity(newEntity);
@@ -363,7 +366,11 @@ namespace OpenGL_Game.Scenes
             }
             if (keysPressed[(char)Keys.M])
             {
-                endGame();
+                toggleMovement();
+            }
+            if (keysPressed[(char)Keys.C])
+            {
+                toggleWallCollision();
             }
             
 
@@ -389,9 +396,9 @@ namespace OpenGL_Game.Scenes
             systemManager.ActionSystems(entityManager);
 
             // Render score and lives
-            GUI.DrawText($"Score: {score}", 30, 80, 30, 255, 255, 255);
             GUI.DrawText($"X: {camera.cameraPosition.X}, Y: {camera.cameraPosition.Y}, Z: {camera.cameraPosition.Z}", 30, 110, 30, 255, 255, 255);
-            GUI.DrawText($"Lives: {lives}", 30, 140, 30, 255, 255, 255);
+            drawLives();
+            drawKeys();
             GUI.Render();
 
         }
@@ -436,6 +443,63 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentVelocity(new Vector3(0.0f, 0.0f, 0.0f)));
             newEntity.AddComponent(new ComponentAIPathfinding(camera.cameraPosition, 2.0f));
             entityManager.AddEntity(newEntity);
+        }
+
+        public void drawLives()
+        {
+            if (lives == 3)
+            {
+                GUI.DrawImage("UI/Heart.png", 1700, 80);
+                GUI.DrawImage("UI/Heart.png", 1740, 80);
+                GUI.DrawImage("UI/Heart.png", 1780, 80);
+            }
+            else if(lives == 2)
+            {
+                GUI.DrawImage("UI/Heart.png", 1740, 80);
+                GUI.DrawImage("UI/Heart.png", 1780, 80);
+            }
+            else if(lives == 1)
+            {
+                GUI.DrawImage("UI/Heart.png", 1780, 80);
+            }
+        }
+
+        public void drawKeys()
+        {
+            if (keysCollected[0] == false)
+            {
+                GUI.DrawImage("UI/Key.png", 30, 200);
+                GUI.DrawText("Room 1 Key Not Collected", 85, 240, 30, 255, 255, 255);
+            }
+            if (keysCollected[1] == false)
+            {
+                GUI.DrawImage("UI/Key.png", 30, 280);
+                GUI.DrawText("Room 2 Key Not Collected", 85, 320, 30, 255, 255, 255);
+            }
+            if (keysCollected[2] == false)
+            {
+                GUI.DrawImage("UI/Key.png", 30, 360);
+                GUI.DrawText("Room 3 Key Not Collected", 85, 400, 30, 255, 255, 255);
+            }
+        }
+
+        public void toggleMovement()
+        {
+            ISystem physicsSystem = systemManager.FindSystem("SystemPhysics");
+            ((SystemPhysics)physicsSystem).togglePhysic();
+        }
+
+        public void toggleWallCollision()
+        {
+            bool wallsEnabled = collisionManager.wallsEnabled;
+            if(wallsEnabled)
+            {
+                collisionManager.wallsEnabled = false;
+            }
+            else
+            {
+                collisionManager.wallsEnabled = true;
+            }
         }
     }
 }

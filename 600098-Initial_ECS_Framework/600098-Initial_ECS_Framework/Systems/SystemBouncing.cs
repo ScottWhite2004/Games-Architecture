@@ -40,8 +40,10 @@ namespace OpenGL_Game.Systems
 
                     float min = ((ComponentBouncing)bouncingComponent).floorHeight;
                     float max = ((ComponentBouncing)bouncingComponent).maxHeight;
-                    
-                    ((ComponentVelocity)velocityComponent).Velocity += bounce(min, max, ((ComponentPosition)positionComponent));
+
+                    Vector3 velocity = ((ComponentVelocity)velocityComponent).Velocity;
+                    Vector3 bounceVelocity = bounce(min, max, ((ComponentPosition)positionComponent));
+                    ((ComponentVelocity)velocityComponent).Velocity = (velocity.X, bounceVelocity.Y, velocity.Z);
 
                 }
             }

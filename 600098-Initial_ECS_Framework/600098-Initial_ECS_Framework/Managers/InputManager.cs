@@ -11,15 +11,13 @@ using System.Threading.Tasks;
 namespace OpenGL_Game.Managers
 {
     abstract class InputManager
-    {
+    { 
+        
         public InputManager()
         {
 
         }
-
-        public abstract void addInput();
-
-        public abstract void removeInput();
+        public abstract void processInputs();
     
     }
 }

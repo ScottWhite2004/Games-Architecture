@@ -14,6 +14,8 @@ namespace OpenGL_Game.Systems
     {
         const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_VELOCITY);
 
+        bool enabled = true;
+
         public SystemPhysics()
         {
 
@@ -25,23 +27,26 @@ namespace OpenGL_Game.Systems
 
         public void OnAction(List<Entity> entityList)
         {
-            foreach (Entity entity in entityList)
+            if (enabled)
             {
-                if ((entity.Mask & MASK) == MASK)
+                foreach (Entity entity in entityList)
                 {
-                    List<IComponent> components = entity.Components;
-
-                    IComponent positionComponent = components.Find(delegate (IComponent component)
+                    if ((entity.Mask & MASK) == MASK)
                     {
-                        return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
-                    });
+                        List<IComponent> components = entity.Components;
 
-                    IComponent velocityComponent = components.Find(delegate (IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_VELOCITY;
-                    });
+                        IComponent positionComponent = components.Find(delegate (IComponent component)
+                        {
+                            return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
+                        });
 
-                    Motion((ComponentPosition)positionComponent, (ComponentVelocity)velocityComponent);
+                        IComponent velocityComponent = components.Find(delegate (IComponent component)
+                        {
+                            return component.ComponentType == ComponentTypes.COMPONENT_VELOCITY;
+                        });
+
+                        Motion((ComponentPosition)positionComponent, (ComponentVelocity)velocityComponent);
+                    }
                 }
             }
         }
@@ -49,6 +54,18 @@ namespace OpenGL_Game.Systems
         public void Motion(ComponentPosition position,ComponentVelocity velocity)
         {
             position.Position += velocity.Velocity * GameScene.dt;
+        }
+
+        public void togglePhysic()
+        {
+            if(enabled)
+            {
+                enabled = false;
+            }
+            else
+            {
+                enabled = true;
+            }
         }
 
         public void reset()

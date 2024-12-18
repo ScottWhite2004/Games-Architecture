@@ -28,7 +28,7 @@ namespace OpenGL_Game.Managers
             systemList.Add(system);
         }
 
-        private ISystem FindSystem(string name)
+        public ISystem FindSystem(string name)
         {
             return systemList.Find(delegate(ISystem system)
             {

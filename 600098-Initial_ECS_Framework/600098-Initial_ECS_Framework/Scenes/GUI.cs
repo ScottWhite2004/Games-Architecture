@@ -33,6 +33,15 @@ namespace OpenGL_Game.Scenes
             CreateTexture();
         }
 
+        public static void DrawImage(string imageURL, float x, float y)
+        {
+            FileStream fileStream = new FileStream(imageURL, FileMode.Open, FileAccess.Read);
+            SKBitmap bitmap = SKBitmap.Decode(fileStream);
+            canvas.DrawBitmap(bitmap, x, y);
+
+            CreateTexture();
+        }
+
         public static void DrawText(String text, float x, float y, float size, byte red, byte green, byte blue)
         {
             SKPaint paint = new SKPaint();
