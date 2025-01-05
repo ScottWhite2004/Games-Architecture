@@ -22,6 +22,7 @@ namespace OpenGL_Game.Components
         COMPONENT_ROAMINGPOINT = 1 << 14,
         COMPONENT_BOUNCING = 1 << 15,
         COMPONENT_MOVEBACKFORTH = 1 << 16,
+        COMPONENT_CAMERALOOKAT = 1 << 17,
     }
 
     interface IComponent

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Input;
+using OpenTK.Windowing.Common;
 using Microsoft.VisualBasic.Devices;
 
 namespace OpenGL_Game.Managers
@@ -26,7 +27,9 @@ namespace OpenGL_Game.Managers
 
         public override void processInputs()
         {
-            if(KeyboardState)
+
+            
+         
         }
 
         public void removeInput(Keys input)
