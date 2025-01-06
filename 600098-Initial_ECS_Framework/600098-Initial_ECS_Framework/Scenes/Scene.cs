@@ -12,7 +12,9 @@ namespace OpenGL_Game.Scenes
             SCENE_NON,
             SCENE_MAIN_MENU,
             SCENE_GAME,
-            SCENE_GAME_OVER
+            SCENE_GAME_OVER,
+            SCENE_HIGH_SCORE,
+            SCENE_ENTER_INITIALS,
         }
 
 

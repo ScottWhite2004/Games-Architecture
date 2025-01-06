@@ -1,0 +1,7 @@
+D:\Uni Work\Games Architecture\Games-Architecture\600098-Initial_ECS_Framework\Server\High Score Server\High Score Server\bin\Release\High Score Server.exe.config
+D:\Uni Work\Games Architecture\Games-Architecture\600098-Initial_ECS_Framework\Server\High Score Server\High Score Server\bin\Release\High Score Server.exe
+D:\Uni Work\Games Architecture\Games-Architecture\600098-Initial_ECS_Framework\Server\High Score Server\High Score Server\bin\Release\High Score Server.pdb
+D:\Uni Work\Games Architecture\Games-Architecture\600098-Initial_ECS_Framework\Server\High Score Server\High Score Server\obj\Release\High Score Server.csproj.AssemblyReference.cache
+D:\Uni Work\Games Architecture\Games-Architecture\600098-Initial_ECS_Framework\Server\High Score Server\High Score Server\obj\Release\High Score Server.csproj.CoreCompileInputs.cache
+D:\Uni Work\Games Architecture\Games-Architecture\600098-Initial_ECS_Framework\Server\High Score Server\High Score Server\obj\Release\High Score Server.exe
+D:\Uni Work\Games Architecture\Games-Architecture\600098-Initial_ECS_Framework\Server\High Score Server\High Score Server\obj\Release\High Score Server.pdb

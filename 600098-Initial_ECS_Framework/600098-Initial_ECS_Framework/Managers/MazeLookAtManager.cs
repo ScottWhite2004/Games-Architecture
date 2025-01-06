@@ -1,4 +1,5 @@
-﻿using OpenGL_Game.Objects;
+﻿using OpenGL_Game.Components;
+using OpenGL_Game.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,32 +12,56 @@ namespace OpenGL_Game.Managers
     {
         public override void processLooking()
         {
-            clearLookAt();
-            clearLookAway();
             foreach(Entity entity in lookAtList)
             {
                 if(entity.Name == "Drone")
                 {
-                    playSound();
+                    playSound(entity);
                 }
             }
             foreach(Entity entity in lookAwayList)
             {
                 if(entity.Name == "Drone")
                 {
-                    stopSound();
+                    stopSound(entity);
                 }
+            }
+            clearLookAt();
+            clearLookAway();
+        }
+
+        public void playSound(Entity entity)
+        {
+            const ComponentTypes MASK = ComponentTypes.COMPONENT_AUDIO;
+
+            if ((entity.Mask & MASK) == MASK)
+            {
+                List<IComponent> components = entity.Components;
+
+                IComponent audioComponent = components.Find(delegate (IComponent component)
+                {
+                    return component.ComponentType == ComponentTypes.COMPONENT_AUDIO;
+                });
+
+                ((ComponentAudio)audioComponent).Play();
             }
         }
 
-        public void playSound()
+        public void stopSound(Entity entity)
         {
+            const ComponentTypes MASK = ComponentTypes.COMPONENT_AUDIO;
 
-        }
+            if ((entity.Mask & MASK) == MASK)
+            {
+                List<IComponent> components = entity.Components;
 
-        public void stopSound()
-        {
+                IComponent audioComponent = components.Find(delegate (IComponent component)
+                {
+                    return component.ComponentType == ComponentTypes.COMPONENT_AUDIO;
+                });
 
+                ((ComponentAudio)audioComponent).Stop();
+            }
         }
     }
 

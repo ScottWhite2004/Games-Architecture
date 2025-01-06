@@ -10,6 +10,7 @@ using OpenTK.Mathematics;
 using SkiaSharp;
 using OpenTK.Audio.OpenAL;
 using System.Collections.Generic;
+using OpenGL_Game.Networking;
 
 namespace OpenGL_Game.Scenes
 {
@@ -26,23 +27,33 @@ namespace OpenGL_Game.Scenes
         MazeCollisionManager collisionManager;
         public Camera camera;
         public static GameScene gameInstance;
+        MazeLookAtManager lookAtManager;
+        public HighScoreManager highScoreManager;
+        public Dictionary<string, int> highScores;
         bool[] keysPressed;
         Vector3 playerStart;
         Vector3 droneStart;
         public bool[] keysCollected;
+        Client client;
 
         public GameScene(SceneManager sceneManager) : base(sceneManager)
         {
             // Set Camera
             playerStart = new Vector3(-4.0f, 2.0f, 53.5f);
             droneStart = new Vector3(-30.0f, 1.0f, 30.0f);
+            highScores = new Dictionary<string, int>();
             camera = new Camera(new Vector3(playerStart), new Vector3(-50, 2, 50), (float)(sceneManager.Size.X) / (float)(sceneManager.Size.Y), 0.1f, 100f);
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
+            lookAtManager = new MazeLookAtManager();
             collisionManager = new MazeCollisionManager(this);
             keysPressed = new bool[511];
             keysCollected = new bool[3];
+            client = new Client();
+            highScoreManager = new HighScoreManager(client, highScores);
+            highScoreManager.getHighScores();
+            Console.WriteLine(highScores);
 
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -200,6 +211,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentShaderDefault());
             newEntity.AddComponent(new ComponentVelocity(new Vector3(0.0f, 0.0f, 0.0f)));
             newEntity.AddComponent(new ComponentAIPathfinding(camera.cameraPosition, 2.0f));
+            newEntity.AddComponent(new ComponentAudio("Audio/coin.wav", false));
             entityManager.AddEntity(newEntity);
 
             newEntity = new Entity("Skybox");
@@ -294,16 +306,22 @@ namespace OpenGL_Game.Scenes
             entityManager.AddEntity(newEntity);
 
             newEntity = new Entity("Bouncing Obstacle");
-            newEntity.AddComponent(new ComponentPosition(-50.0f, 1.0f, 3.0f));
+            newEntity.AddComponent(new ComponentPosition(-50.0f, 1.0f, 15.0f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Bouncing_Ball/bouncing_ball.obj"));
             newEntity.AddComponent(new ComponentShaderDefault());
             newEntity.AddComponent(new ComponentCollisionSphere(2.0f));
-            //newEntity.AddComponent(new ComponentBouncing(5.0f, 1.5f));
             newEntity.AddComponent(new ComponentVelocity(0.0f, 0.0f, 0.0f));
-            newEntity.AddComponent(new ComponentMoveBackAndForth(new Vector3(-50.0f, 1.0f, 15.0f), new Vector3(-50.0f, 1.0f, 3.0f)));
             entityManager.AddEntity(newEntity);
 
+            newEntity = new Entity("Player Hurt");
+            newEntity.AddComponent(new ComponentPosition(0.0f, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentAudio("Audio/coin.wav",true));
+            newEntity.AddComponent(new ComponentFollow(camera));
 
+            newEntity = new Entity("All Coins Collected");
+            newEntity.AddComponent(new ComponentPosition(0.0f, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentAudio("Audio/coin.wav", true));
+            newEntity.AddComponent(new ComponentFollow(camera));
 
         }
 
@@ -336,6 +354,10 @@ namespace OpenGL_Game.Scenes
             newSystem = new SystemBouncing();
             systemManager.AddSystem(newSystem);
             newSystem = new SystemMoveBackAndForth();
+            systemManager.AddSystem(newSystem);
+            newSystem = new SystemCameraLookAt(lookAtManager);
+            systemManager.AddSystem(newSystem);
+            newSystem = new SystemBounceBackAndForth();
             systemManager.AddSystem(newSystem);
         }
 
@@ -377,6 +399,7 @@ namespace OpenGL_Game.Scenes
             AL.Listener(ALListener3f.Position, ref camera.cameraPosition);
             AL.Listener(ALListenerfv.Orientation, ref camera.cameraDirection, ref camera.cameraUp);
             collisionManager.ProcessCollisions();
+            lookAtManager.processLooking();
 
             //System.Console.WriteLine("fps=" + (int)(1.0/dt));
 
@@ -431,6 +454,11 @@ namespace OpenGL_Game.Scenes
             sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
         }
 
+        public void winGame()
+        {
+            sceneManager.ChangeScene(SceneTypes.SCENE_HIGH_SCORE);
+        }
+
         public void resetPositions()
         {
             camera.cameraPosition = playerStart;
@@ -442,6 +470,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentShaderDefault());
             newEntity.AddComponent(new ComponentVelocity(new Vector3(0.0f, 0.0f, 0.0f)));
             newEntity.AddComponent(new ComponentAIPathfinding(camera.cameraPosition, 2.0f));
+            newEntity.AddComponent(new ComponentAudio("Audio/coin.wav", false));
             entityManager.AddEntity(newEntity);
         }
 

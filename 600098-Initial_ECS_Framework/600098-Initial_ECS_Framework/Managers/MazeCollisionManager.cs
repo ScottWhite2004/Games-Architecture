@@ -17,10 +17,12 @@ namespace OpenGL_Game.Managers
     {
         GameScene sceneInstance;
         public bool wallsEnabled = true;
+        EntityManager entityManager;
         
-        public MazeCollisionManager(GameScene pSceneInstance)
+        public MazeCollisionManager(GameScene pSceneInstance, EntityManager pEntityManager)
         {
             sceneInstance = pSceneInstance;
+            entityManager = pEntityManager;
         }
 
         public override void ProcessCollisions()
@@ -39,6 +41,10 @@ namespace OpenGL_Game.Managers
                             playSoundEffect(coll.entity);
                             sceneInstance.entityManager.RemoveEntity(coll.entity);
                             sceneInstance.keysCollected[0] = true;
+                            if (sceneInstance.score == 3)
+                            {
+                                getAllCoinsCollectEntity();
+                            }
                         }
                         if (coll.entity.Name == "Key 2")
                         {
@@ -47,6 +53,11 @@ namespace OpenGL_Game.Managers
                             playSoundEffect(coll.entity);
                             sceneInstance.entityManager.RemoveEntity(coll.entity);
                             sceneInstance.keysCollected[1] = true;
+                            if (sceneInstance.score == 3)
+                            {
+                                getAllCoinsCollectEntity();
+                            }
+
                         }
                         if (coll.entity.Name == "Key 3")
                         {
@@ -55,12 +66,16 @@ namespace OpenGL_Game.Managers
                             playSoundEffect(coll.entity);
                             sceneInstance.entityManager.RemoveEntity(coll.entity);
                             sceneInstance.keysCollected[2] = true;
+                            if(sceneInstance.score == 3)
+                            {
+                                getAllCoinsCollectEntity();
+                            }
                         }
                         if (coll.entity.Name == "Portal")
                         {
                             if(sceneInstance.score == 3)
                             {
-                                sceneInstance.endGame();
+                                sceneInstance.winGame();
                             }
                             else
                             {
@@ -69,11 +84,12 @@ namespace OpenGL_Game.Managers
                         }
                         if (coll.entity.Name == "Drone")
                         {
-                            if (sceneInstance.lives > 0)
+                            if (sceneInstance.lives > 1)
                             {
                                 sceneInstance.entityManager.RemoveEntity(coll.entity);
                                 sceneInstance.resetPositions();
                                 sceneInstance.lives--;
+                                getPlayerHurtEntity();
                             }
                             else
                             {
@@ -82,10 +98,11 @@ namespace OpenGL_Game.Managers
                         }
                         if(coll.entity.Name == "Rolling Obstacle")
                         {
-                            if(sceneInstance.lives > 0)
+                            if(sceneInstance.lives > 1)
                             {
                                 sceneInstance.lives--;
                                 Cameraknockback(coll.entity);
+                                getPlayerHurtEntity();
                             }
                             else
                             {
@@ -94,10 +111,11 @@ namespace OpenGL_Game.Managers
                         }
                         if(coll.entity.Name == "Bouncing Obstacle")
                         {
-                            if(sceneInstance.lives > 0)
+                            if(sceneInstance.lives > 1)
                             {
                                 sceneInstance.lives--;
                                 Cameraknockback(coll.entity);
+                                getPlayerHurtEntity();
                             }
                             else
                             {
@@ -160,6 +178,29 @@ namespace OpenGL_Game.Managers
                     sceneInstance.camera.MoveForward(2.0f);
                 }
 
+            }
+        }
+
+        public void getPlayerHurtEntity()
+        {
+            
+            foreach(Entity entity in entityManager.Entities())
+            {
+                if(entity.Name == "Player Hurt")
+                {
+                    playSoundEffect(entity);
+                }
+            }
+        }
+
+        public void getAllCoinsCollectEntity()
+        {
+            foreach (Entity entity in entityManager.Entities())
+            {
+                if (entity.Name == "All Coins Collected")
+                {
+                    playSoundEffect(entity);
+                }
             }
         }
     }

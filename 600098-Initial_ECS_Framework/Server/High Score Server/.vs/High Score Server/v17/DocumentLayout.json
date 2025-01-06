@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Uni Work\\Games Architecture\\Games-Architecture\\600098-Initial_ECS_Framework\\Server\\High Score Server\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A03CDB0A-2256-46B3-BC2A-BBAF3DCAF126}|High Score Server\\High Score Server.csproj|d:\\uni work\\games architecture\\games-architecture\\600098-initial_ecs_framework\\server\\high score server\\high score server\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A03CDB0A-2256-46B3-BC2A-BBAF3DCAF126}|High Score Server\\High Score Server.csproj|solutionrelative:high score server\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A03CDB0A-2256-46B3-BC2A-BBAF3DCAF126}|High Score Server\\High Score Server.csproj|d:\\uni work\\games architecture\\games-architecture\\600098-initial_ecs_framework\\server\\high score server\\high score server\\highscore.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A03CDB0A-2256-46B3-BC2A-BBAF3DCAF126}|High Score Server\\High Score Server.csproj|solutionrelative:high score server\\highscore.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "highscore.txt",
+              "DocumentMoniker": "D:\\Uni Work\\Games Architecture\\Games-Architecture\\600098-Initial_ECS_Framework\\Server\\High Score Server\\High Score Server\\highscore.txt",
+              "RelativeDocumentMoniker": "High Score Server\\highscore.txt",
+              "ToolTip": "D:\\Uni Work\\Games Architecture\\Games-Architecture\\600098-Initial_ECS_Framework\\Server\\High Score Server\\High Score Server\\highscore.txt",
+              "RelativeToolTip": "High Score Server\\highscore.txt",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-01-06T20:04:14.956Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Server.cs",
+              "DocumentMoniker": "D:\\Uni Work\\Games Architecture\\Games-Architecture\\600098-Initial_ECS_Framework\\Server\\High Score Server\\High Score Server\\Server.cs",
+              "RelativeDocumentMoniker": "High Score Server\\Server.cs",
+              "ToolTip": "D:\\Uni Work\\Games Architecture\\Games-Architecture\\600098-Initial_ECS_Framework\\Server\\High Score Server\\High Score Server\\Server.cs",
+              "RelativeToolTip": "High Score Server\\Server.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAuwCMAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-06T15:50:42.584Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -4,7 +4,9 @@ using OpenGL_Game.Scenes;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using OpenTK.Audio.OpenAL; // NEW for Audio
+using OpenTK.Audio.OpenAL;
+using System.Collections.Generic;
+using OpenGL_Game.Networking; // NEW for Audio
 
 namespace OpenGL_Game.Managers
 {
@@ -116,6 +118,44 @@ namespace OpenGL_Game.Managers
 
         }
 
+        public void StartHighScoreMenu()
+        {
+            int score = 0;
+            Dictionary<string, int> highScores = new Dictionary<string, int>();
+            HighScoreManager highScoreManager = new HighScoreManager(new Client(), highScores);
+            if (scene != null)
+            {
+                if(scene.GetType().Equals(typeof(GameScene)))
+                {
+                    GameScene gameScene = (GameScene)scene;
+                    score = gameScene.score;
+                    highScores = gameScene.highScores;
+                    highScoreManager = gameScene.highScoreManager;
+                }
+                scene.Close();
+            }
+            scene = new HighScoreScene(this, highScores, score, highScoreManager);
+        }
+
+        public void StartEnterInitialsMenu()
+        {
+            int score = 0;
+            Dictionary<string, int> highScores = new Dictionary<string, int>();
+            HighScoreManager highScoreManager = new HighScoreManager(new Client(), highScores);
+            if (scene != null)
+            {
+                if (scene.GetType().Equals(typeof(HighScoreScene)))
+                {
+                    HighScoreScene highScoreScene = (HighScoreScene)scene;
+                    score = highScoreScene.score;
+                    highScores = highScoreScene.highScores;
+                    highScoreManager = highScoreScene.highScoreManager;
+                }
+                scene.Close();
+            }
+            scene = new EnterInitialsScene(this, highScores, score, highScoreManager);
+        }
+
         public static int WindowWidth
         {
             get { return width; }
@@ -158,6 +198,12 @@ namespace OpenGL_Game.Managers
                     break;
                 case Scene.SceneTypes.SCENE_GAME_OVER:
                     EndGameMenu();
+                    break;
+                case Scene.SceneTypes.SCENE_HIGH_SCORE:
+                    StartHighScoreMenu();
+                    break;
+                case Scene.SceneTypes.SCENE_ENTER_INITIALS:
+                    StartEnterInitialsMenu();
                     break;
 
             }

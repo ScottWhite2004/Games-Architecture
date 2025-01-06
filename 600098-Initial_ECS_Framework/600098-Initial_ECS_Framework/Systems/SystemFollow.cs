@@ -36,8 +36,7 @@ namespace OpenGL_Game.Systems
                         return component.ComponentType == ComponentTypes.COMPONENT_FOLLOW;
                     });
 
-                    Vector3 position = ((ComponentPosition)positionComponent).Position;
-                    updatePosition((ComponentFollow)followComponent, position);
+                    ((ComponentPosition)positionComponent).Position = ((ComponentFollow)followComponent).camera.cameraPosition;
                 }
 
             }
@@ -47,10 +46,6 @@ namespace OpenGL_Game.Systems
         {
         }
 
-        public void updatePosition(ComponentFollow componentFollow, Vector3 position)
-        {
-            componentFollow.camera.cameraPosition = (position.X,position.Y, position.Z+3);
-            componentFollow.camera.UpdateView();
-        }
+
     }
 }
