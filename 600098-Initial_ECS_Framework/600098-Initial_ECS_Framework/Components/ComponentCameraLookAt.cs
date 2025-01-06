@@ -10,7 +10,7 @@ namespace OpenGL_Game.Components
     {
         public ComponentTypes ComponentType { get { return ComponentTypes.COMPONENT_CAMERALOOKAT; } }
 
-        Camera camera;
+        public Camera camera;
 
         public ComponentCameraLookAt(Camera pCamera)
         {
