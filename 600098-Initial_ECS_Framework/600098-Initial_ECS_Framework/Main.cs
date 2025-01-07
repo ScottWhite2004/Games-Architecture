@@ -1,5 +1,5 @@
 ﻿using System;
-using OpenGL_Game.Managers;
+using OpenGL_Game.Game.Managers;
 
 namespace OpenGL_Game
 {

@@ -49,51 +49,41 @@ namespace High_Score_Server
             }
 
 
-
+            //Server that can add and retrive high scores
+            TcpListener server = new TcpListener(IPAddress.Loopback, 8080);
+            server.Start();
+            Console.WriteLine("Server started");
+            Console.WriteLine();
+            TcpClient client = server.AcceptTcpClient();
             while (true)
             {
-                int port = 8080;
-
-                TcpListener listener = new TcpListener(IPAddress.Loopback, port);
-
-                listener.Start();
-
-                TcpClient client = listener.AcceptTcpClient();
-
-                NetworkStream stream = client.GetStream();
-
-                StreamWriter writer = new StreamWriter(stream, Encoding.ASCII) { AutoFlush = true };
-                StreamReader reader = new StreamReader(stream, Encoding.ASCII);
-
                 try
                 {
-                    Console.WriteLine("Server is running");
-                    string inputLine = "";
-                    while (inputLine != null)
+                    Console.WriteLine("Client connected");
+                    NetworkStream stream = client.GetStream();
+                    StreamReader sr = new StreamReader(stream);
+                    StreamWriter sw = new StreamWriter(stream);
+                    sw.AutoFlush = true;
+                    string message = sr.ReadLine();
+                    Console.WriteLine("Message recieved: " + message);
+                    if (message == "get")
                     {
-                        inputLine = reader.ReadLine();
-                        if (inputLine == "get")
-                        {
-                            Console.WriteLine("Getting High Scores");
-                            string send = loadHighScore();
-                            writer.WriteLine(send);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Adding New High Score");
-                            addNewScore(reader.ReadLine());
-                            writer.WriteLine("New High Score Added");
-                            Console.WriteLine("New High Score Added");
-                        }
+                        string highScore = loadHighScore();
+                        sw.WriteLine(highScore);
+                        Console.WriteLine("High score sent: " + highScore);
+                    }
+                    else
+                    {
+                        addNewScore(message);
+                        Console.WriteLine("New high score added: " + message);
                     }
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
-                    listener.Stop();
-                    client.Close();
+                    Console.WriteLine("Error: " + e);
                 }
             }
+
         }
     }
 }
